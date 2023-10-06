@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sửa Rạp Phim</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Cập nhật rạp phim</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+
+        <form role="form" action="/rapphim/{{rp._id}}/edit" method="post" enctype="application/x-www-form-urlencoded">
+          <div class="input-group mb-3">
+            <input type="text" name="tenRapPhim" class="form-control" placeholder="Tên rạp phim"
+              value="{{rp.tenRapPhim}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="diaChi" class="form-control" placeholder="Địa chỉ" value="{{rp.diaChi}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="SDT" class="form-control" placeholder="Số điện thoại" value="{{rp.SDT}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="hinh" class="form-control" placeholder="Địa chỉ hình rạp" value="{{rp.hinh}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn btn-primary btn-block" value="Edit">Cập nhật</button>
+            <a href="/rapphim" class="btn btn-block btn-danger">
+              <i class="#"></i> Hủy
+            </a>
+
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+    <!-- /.col -->
+
+    <!-- /.col -->
+  </div>
+
+
+
+  <!-- /.login-card-body -->
+  </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+
+
+</body>
+
+</html>
