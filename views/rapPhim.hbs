@@ -56,31 +56,27 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./rapphim" class="nav-link">
+               <li class="nav-item">
+                <a  href="./rapphim" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Rạp phim</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./khachhang" class="nav-link active">
+                <a href="./khachhang" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý khách Hàng</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="./phim" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
+                  <p>Phim</p>
                 </a>
               </li>
               {{!-- // khoảng cách của cái đăng xuất --}}
               <div>
-                  <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
+                  
                <li class="nav-item">
                 <a href="#" class="nav-link">
                   <p></p>
@@ -297,7 +293,7 @@
 
     }
     const goNew = () => {
-      window.location.href = `/rapphim/new`;
+      window.location.href = `/rapphim/newRapPhim`;
     }
     const goUpdate = (id) => {
       location.href = `/rapphim/${id}/edit`;

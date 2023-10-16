@@ -24,11 +24,11 @@ router.get('/', async function(req, res, next) {
         console.log(error);
     }
 });
-router.get('/new', function(req, res, next) {
+router.get('/newRapPhim', function(req, res, next) {
     res.render('newRapPhim')
     
 });
-router.post('/new',async function(req, res, next) {
+router.post('/newRapPhim',async function(req, res, next) {
     try {
         //lấy giá trị name từ body
         let { tenRapPhim, diaChi, SDT, hinh } = req.body;

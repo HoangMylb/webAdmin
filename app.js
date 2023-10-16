@@ -23,6 +23,8 @@ var app = express();
 // tạo biến chỉ đường tới router
 var khachHangRoutes = require('./routes/khachHang')
 var rapPhimRoutes = require('./routes/rapPhim')
+var phimRoutes = require('./routes/phim')
+
 var loginRoutes = require('./routes/login')
 
 // view engine setup
@@ -39,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/khachhang', khachHangRoutes);
 app.use('/rapphim', rapPhimRoutes);
+app.use('/phim', phimRoutes);
 app.use('/login', loginRoutes);
 
 

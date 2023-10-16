@@ -26,6 +26,33 @@ router.get('/', async function(req, res, next) {
         console.log(error);
     }
 });
+router.post('/login', async function(req, res, next) {
+    try {
+        let { userName,passWord } = req.body;
+        let khachHang = await khachHangController.login(userName,passWord);
+      if (khachHang.success) {
+        res.status(200).json({
+          message: khachHang.message,
+          username: userName,
+          password: passWord,
+          khachHang: khachHang.khachHang,
+          success:  khachHang.success
+        });
+      } else {
+        res.status(200).json({
+          message: khachHang.message,
+          username: userName,
+          password: passWord,
+          success:  khachHang.success
+        });
+      }
+       
+        
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 
 module.exports = router;
