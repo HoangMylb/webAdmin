@@ -8,6 +8,7 @@ const KhachHangSchema = new Schema({
     ngaySinh: String,
     vaiTro: String,
     gioiTinh: String,
+    hinhAnh: String,
 });
 // Khai báo model cho collection "sanpham"
 const KhachHang = mongoose.model('Persons', KhachHangSchema,'Persons');

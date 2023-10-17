@@ -6,8 +6,9 @@ const khachHangController = require('../controller/khachHangController');
 // http://localhost:3000/khachhang
 router.get('/', async function(req, res, next) {
     try {
+      const startIndex = 1;
         let khachHang = await khachHangController.getByVaiTro();
-        khachHang = khachHang.map(el => {
+        khachHang = khachHang.map((el,index) => {
             return {
                 _id: el._id,
                 tenKhachHang: el.tenKhachHang,
@@ -17,10 +18,12 @@ router.get('/', async function(req, res, next) {
                 ngaySinh: el.ngaySinh,
                 vaiTro: el.vaiTro,
                 gioiTinh: el.gioiTinh,
+                hinhAnh: el.hinhAnh,
+                indexPlusOne: index + 1,
 
             }
         });
-        res.render('khachHang', { kh: khachHang })
+        res.render('khachHang', { kh: khachHang ,startIndex})
         
     } catch (error) {
         console.log(error);
@@ -53,6 +56,34 @@ router.post('/login', async function(req, res, next) {
     }
 });
 
+router.post('/newKhachHang',async function(req, res, next) {
+  try {
+      //lấy giá trị name từ body
+      let { tenKhachHang, userName, passWord, rePassWord, SDT, ngaySinh, vaiTro, gioiTinh, hinhAnh } = req.body;
+      
+      
+      let khachHang = await khachHangController.newKhachHang(tenKhachHang, userName, passWord, rePassWord, SDT, ngaySinh, vaiTro, gioiTinh, hinhAnh);
+      if (khachHang.success) {
+        res.status(200).json({
+          message: khachHang.message,
+          username: userName,
+          password: passWord,
+          success:  khachHang.success
+        });
+        console.log("Đã thêm vào collection 'Persons'");
+      } else {
+        res.status(200).json({
+          message: khachHang.message,
+          username: userName,
+          password: passWord,
+          success:  khachHang.success
+        });
+      }
 
+  } catch (err) {
+      console.error(err);
+      res.status(500).send("Chưa thêm được");
+  }
+});
 
 module.exports = router;

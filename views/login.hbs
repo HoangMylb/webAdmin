@@ -56,14 +56,18 @@
       let passWord = document.getElementById("passWord").value;
       if (userName.length === 0 || passWord.length === 0) {
         alert("Không để trống Username hoặc Password")
+        return false
       } else {
 
-        if (userName === "abc1@gmail.com" && passWord === "abc123") {
+        if (userName === "abcd1@gmail.com" && passWord === "abcd123") {
+
           alert("Đăng nhập thành công")
           window.location.href = `/rapphim`;
+          return true
           
         } else {
           alert("Sai Username hoặc Password")
+          return false
         }
       }
     }
