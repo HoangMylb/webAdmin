@@ -24,6 +24,7 @@ var app = express();
 var khachHangRoutes = require('./routes/khachHang')
 var rapPhimRoutes = require('./routes/rapPhim')
 var phimRoutes = require('./routes/phim')
+var dienVienRoutes = require('./routes/dienVien')
 
 var loginRoutes = require('./routes/login')
 
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/khachhang', khachHangRoutes);
 app.use('/rapphim', rapPhimRoutes);
 app.use('/phim', phimRoutes);
+app.use('/dienVien', dienVienRoutes);
 app.use('/login', loginRoutes);
 
 

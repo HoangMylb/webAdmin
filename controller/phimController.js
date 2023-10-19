@@ -11,11 +11,11 @@ async function getAll() {
   }
 }
 
-async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim) {
+async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart) {
 
   try {
 
-
+    let errors=[];
     const rapPhimArray = rapPhim.split(',').map((item) => item.trim()); // Tách chuỗi thành mảng và loại bỏ khoảng trắng
     const dienVienArray = dienVien.split(',').map((item) => item.trim()); // Tách chuỗi thành mảng và loại bỏ khoảng trắng
 
@@ -31,21 +31,21 @@ async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, 
 
 
     if (nonExistingRapPhim.length === 0 && nonExistingDienVien.length === 0) {
-      const phimMoi = new Phim({ tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), dienVien: existingDienVien.map((dienVien) => dienVien._id) });
+      const phimMoi = new Phim({ tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, 
+        rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), dienVien: existingDienVien.map((dienVien) => dienVien._id), iconStart });
+
       await phimMoi.save();
       console.log(phimMoi)
+      return { success: true, message: "Thêm phim thành công" };
     } else {
-     
       if (nonExistingRapPhim.length != 0) {
-        console.log("những Rạp phim này chưa có: " + nonExistingRapPhim)
-        console.log("lọc còn lại tên rạpphim: " + existingRapPhimNames)
-        console.log("những thể loại này có trong bang: " + JSON.stringify(existingRapPhim))
-       
+        errors.push("những Rạp phim này chưa có: " + nonExistingRapPhim);
       }
       if (nonExistingDienVien.length != 0) {  
-        console.log("những Diễn viên này chưa có: " + nonExistingDienVien)
-        console.log("lọc còn lại tên dienvien: " + existingDienVienNames)
-        console.log("những thể loại này có trong bang: " + JSON.stringify(existingDienVien))
+        errors.push("những Diễn viên này chưa có: " + nonExistingDienVien);
+      }
+      if (errors.length > 0) {
+        return { success: false, message: errors };
       }
     }
 
@@ -53,9 +53,31 @@ async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, 
   } catch (error) {
     console.error("Lỗi khi thêm phim:", error);
   }
-
-
+}
+async function update (_id, newData){
+  try {
+   await Phim.updateOne({ _id}, newData);
+  } catch (error) {
+   console.log(error);
+  }
+}
+async function del (_id){
+ 
+  try {
+      await Phim.deleteOne({ _id: _id });
+      console.log("xóa");
+     } catch (error) {
+      console.log(error);
+     }
+}
+async function getById(_id) {
+  try {
+    let phim = await Phim.findById(_id);
+    return phim;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
-module.exports = { createPhim, getAll }
+module.exports = { createPhim, getAll, update, del, getById}

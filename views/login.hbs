@@ -20,9 +20,9 @@
     <div class="card">
       <div class="card-body login-card-body">
 
-        <form action="/rapphim">
+        <form role="form" action="/login" method="post" enctype="application/x-www-form-urlencoded">
           <div class="input-group mb-3">
-            <input type="email" id="userName" name="userName" class="form-control" placeholder="Email">
+            <input type="email" id="userName" name="userName" class="form-control" placeholder="Email" value="{{userName}}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -30,14 +30,17 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" id="passWord" name="passWord" class="form-control" placeholder="Password">
+            <input type="password" id="passWord" name="passWord" class="form-control" placeholder="Password" value="{{passWord}}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <button type="submit" onclick="check();" class="btn btn-primary btn-block" value="Edit">Đăng nhập</button>
+          <button type="submit" onclick="check()" class="btn btn-primary btn-block" value="Edit">Đăng nhập</button>
+          {{#if error}}
+          <div class="alert alert-danger" style="margin-top: 20px;">{{error}}</div>
+          {{/if}}
         </form>
 
 
@@ -49,30 +52,19 @@
   <!-- /.login-box -->
 
   <!-- jQuery -->
+  {{!--
   <script>
 
     function check() {
       let userName = document.getElementById("userName").value;
       let passWord = document.getElementById("passWord").value;
-      if (userName.length === 0 || passWord.length === 0) {
+      if (userName.length <= 0 || passWord.length <= 0) {
         alert("Không để trống Username hoặc Password")
-        return false
-      } else {
 
-        if (userName === "abcd1@gmail.com" && passWord === "abcd123") {
-
-          alert("Đăng nhập thành công")
-          window.location.href = `/rapphim`;
-          return true
-          
-        } else {
-          alert("Sai Username hoặc Password")
-          return false
-        }
       }
     }
 
-  </script>
+  </script> --}}
 </body>
 
 </html>

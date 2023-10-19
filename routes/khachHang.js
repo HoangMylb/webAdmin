@@ -85,5 +85,16 @@ router.post('/newKhachHang',async function(req, res, next) {
       res.status(500).send("Chưa thêm được");
   }
 });
+router.get('/getThongTin', async  (req, res, next)  =>{
+  
+  let { _id  } = req.body;
+  try {
+      let phim = await khachHangController.getById(_id);
+      res.status(200).json({phim});
+      
+  } catch (error) {
+      console.log('không lấy được'+error);
+  }
+});
 
 module.exports = router;

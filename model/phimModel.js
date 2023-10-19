@@ -23,6 +23,7 @@ const PhimSchema = new Schema({
       ref: 'DienVien'
     }
   ],
+  iconStart: String
     
 });
 // Khai báo model cho collection "sanpham"

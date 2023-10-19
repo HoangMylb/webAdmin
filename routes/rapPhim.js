@@ -32,16 +32,30 @@ router.post('/newRapPhim',async function(req, res, next) {
     try {
         //lấy giá trị name từ body
         let { tenRapPhim, diaChi, SDT, hinh } = req.body;
-
-        
-        let ojDB = {
-            tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
+        let errors=[];
+        if (tenRapPhim.length <= 0) {
+            errors.push("Không để trống tên Rạp");
         }
-        
-
-        await rapPhimController.insert(ojDB);
-        console.log("Đã thêm vào collection 'RapPhim'");
-        res.redirect('/rapphim');
+        if (diaChi.length <= 0) {
+            errors.push("Không để trống địa chỉ");
+        }
+        if (SDT.length <= 0) {
+            errors.push("Không để trống số điện thoại");
+        }
+        if (hinh.length <= 0) {
+            errors.push("Không để trống hình ảnh");
+        }
+        if (errors.length > 0) {
+            res.render('newRapPhim', { errors, tenRapPhim, diaChi, SDT, hinh });
+        }else{
+            let ojDB = {
+                tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
+            }
+            await rapPhimController.insert(ojDB);
+            console.log("Đã thêm vào collection 'RapPhim'");
+            res.redirect('/rapphim');
+        }
+       
 
     } catch (err) {
         console.error(err);

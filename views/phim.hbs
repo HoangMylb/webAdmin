@@ -32,6 +32,13 @@
           <img src="https://firebasestorage.googleapis.com/v0/b/fir-cinemaapp-dcbcf.appspot.com/o/ImageUser.png?alt=media&token=07b4b15d-4dcf-402b-88c0-87a987022e19&_gl=1*td1yd*_ga*MTQ3NDUwNTMwMy4xNjk1NDY8NTE2MDEwMjcy*_ga_CW55HF8NVT*MTY5NzAxOTM0OC40LjAuMC4xLjAuMC4w" width="60px" height="60px" alt="">
         </li>
       </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+         <a href="/login" class="nav-link">
+                  <p>Đăng xuất !</p>
+                </a>
+        </li>
+      </ul>
     </nav>
     <!-- /.navbar -->
 
@@ -76,8 +83,9 @@
               </li>
              
               <li class="nav-item">
-                <a href="/login" class="nav-link">
-                  <p>Đăng xuất</p>
+                <a href="./dienvien" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Diễn viên</p>
                 </a>
               </li>
             </ul>
@@ -117,16 +125,16 @@
                     <tr>
                       {{!-- tenPhim,theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim
                       --}}
-                      <th>ID phim</th>
-                      <th>Tên phim</th>
-                      <th>Thể loại phim</th>
-                      <th>Trailer Phim</th>
-                      <th>Poster Phim</th>
-                      <th>Thời Lượng Phim</th>
-                      <th>Nội Dung Phim</th>
-                      <th>Icon</th>
-                      <th>Diễn Viên</th>
-                      <th>Rạp Phim</th>
+                      <th style="width: 90px;">ID phim</th>
+                      <th style="width: 90px;">Tên phim</th>
+                      <th style="width: 90px;">Thể loại phim</th>
+                      <th style="width: 90px;">Trailer Phim</th>
+                      <th style="width: 90px;">Poster Phim</th>
+                      <th style="width: 90px;">Thời Lượng Phim</th>
+                      <th style="width: 90px;">Nội Dung Phim</th>
+                      <th style="width: 90px;">Icon</th>
+                      <th style="width: 90px;">Diễn Viên</th>
+                      <th style="width: 90px;">Rạp Phim</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -150,10 +158,10 @@
                       <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{dienVien}}</td>
                       <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{rapPhim}}</td>
                       <td>
-                        <button onclick="goUpdate('{{_id}}');" class="btn btn-primary btn-block">Cập nhật</button>
+                        <button onclick="goUpdate('{{_id}}');" class="btn btn-primary btn-block" style="width: 90px;">Cập nhật</button>
                       </td>
                       <td>
-                        <a href="#" onclick="fDel('{{_id}}');" class="btn btn-block btn-danger">
+                        <a href="#" onclick="fDel('{{_id}}');" class="btn btn-block btn-danger" style="width: 90px;">
                           <i class="#"></i> Xóa
                         </a>
                       </td>
@@ -188,7 +196,7 @@
 
     const fDel = (id) => {
       if (confirm("Bạn có muốn xóa không?")) {
-        location.href = `/rapphim/${id}/del`;
+        location.href = `/phim/${id}/del`;
       }
 
     }
@@ -196,7 +204,7 @@
       window.location.href = `/phim/newPhim`;
     }
     const goUpdate = (id) => {
-      location.href = `/rapphim/${id}/edit`;
+      location.href = `/phim/${id}/edit`;
     }
   </script>
 </body>
