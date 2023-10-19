@@ -7,16 +7,18 @@ const dienVienController = require('../controller/dienVienController');
 
 router.get('/', async function (req, res, next) {
     try {
+        const startIndex = 1;
         let dienVien = await dienVienController.getAll();
-        dienVien = dienVien.map(el => {
+        dienVien = dienVien.map((el,index) => {
             return {
                 _id: el._id,
                 tenDienVien: el.tenDienVien,
                 hinhAnh: el.hinhAnh,
+                indexPlusOne: index + 1,
 
             }
         });
-        res.render('dienVien', { dv: dienVien })
+        res.render('dienVien', { dv: dienVien,startIndex })
 
     } catch (error) {
         console.log(error);

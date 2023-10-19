@@ -128,11 +128,78 @@ async function loginAdmin(userName, passWord) {
     return { success: false, khachHang: null, message: 'Lỗi trong quá trình đăng nhập' };
   }
 }
-async function updateUser(_id, newData) {
+async function updateUser(_id, tenKhachHang, userName, passWord, rePassWord, SDT, ngaySinh, gioiTinh, hinhAnh) {
+  // try {
+  //   await KhachHang.updateOne({ _id }, tenKhachHang, userName, passWord, rePassWord, SDT, ngaySinh, vaiTro, gioiTinh, hinhAnh);
+  // } catch (error) {
+  //   console.log(error);
+  // }
   try {
-    await KhachHang.updateOne({ _id }, newData);
+    const errors = [];
+    const errors2 = [];
+    if (!tenKhachHang) {
+      errors.push('Không để trống Họ và tên');
+    }
+    if (!userName) {
+      errors.push('Không để trống Email');
+    }
+    if (!SDT) {
+      errors.push('Không để trống Số điện thoại');
+    }
+    if (!gioiTinh) {
+      errors.push('Không để trống Giới tính');
+    }
+    if (!ngaySinh) {
+      errors.push('Không để trống Ngày Sinh');
+    }
+    if (!passWord) {
+      errors.push('Không để trống Mật khẩu');
+    }
+    if (!rePassWord) {
+      errors.push('Không để trống Xác nhận mật khẩu');
+    }
+
+    if (!hinhAnh) {
+      errors.push('Trống hinhAnh');
+    }
+    if (!isEmail(userName)) {
+      errors2.push('Nhập không đúng định dạng Email');
+    }
+    if (!isPhoneNumber(SDT)) {
+      errors2.push('Nhập sai dịnh dạng Số điện thoại');
+    }
+    if (!isPassWord(passWord)) {
+      errors2.push('Nhập mật khẩu chỉ được nhập ít nhất 6 ký tự và dài nhất 20 ký tự');
+    }
+    if (errors.length > 0) {
+      return { success: false, message: errors };
+    }
+    else {
+      const existingUserWithEmail = await KhachHang.findOne({ userName });
+      const existingUserWithSDT = await KhachHang.findOne({ SDT });
+      // Kiểm tra xem email và SDT đã tồn tại trong cơ sở dữ liệu chưa
+      if (existingUserWithEmail) {
+        errors2.push('Email này đã được sử dụng');
+      }
+      if (existingUserWithSDT) {
+        errors2.push('Số điện thoại này đã được sử dụng');
+      }
+      if (rePassWord != passWord) {
+        errors2.push('Mật khẩu không trùng nhau');
+      }
+      if (errors2.length > 0) {
+        return { success: false, message: errors2 };
+      }
+      else {
+        await KhachHang.updateOne({ _id }, tenKhachHang, userName, passWord, rePassWord, SDT, ngaySinh, gioiTinh, hinhAnh);
+      }
+
+      return { success: true, message: 'Cập nhật thành công' };
+    }
+
   } catch (error) {
     console.log(error);
+    return { success: false, message: 'Lỗi trong quá trình cập nhật' };
   }
 }
 async function getById(_id) {

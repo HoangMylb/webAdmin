@@ -7,18 +7,20 @@ const rapPhimController = require('../controller/rapPhimController');
 
 router.get('/', async function(req, res, next) {
     try {
+        const startIndex = 1;
         let rapPhim = await rapPhimController.getAll();
-        rapPhim = rapPhim.map(el => {
+        rapPhim = rapPhim.map((el,index) => {
             return {
                 _id: el._id,
                 tenRapPhim: el.tenRapPhim,
                 diaChi: el.diaChi,
                 SDT: el.SDT,
                 hinh: el.hinh,
+                indexPlusOne: index + 1,
 
             }
         });
-        res.render('rapPhim', { rp: rapPhim })
+        res.render('rapPhim', { rp: rapPhim,startIndex })
         
     } catch (error) {
         console.log(error);

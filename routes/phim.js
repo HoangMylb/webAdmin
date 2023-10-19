@@ -7,8 +7,9 @@ const phimController = require('../controller/phimController');
 
 router.get('/', async function (req, res, next) {
     try {
+        const startIndex = 1;
         let phim = await phimController.getAll();
-        phim = phim.map(el => {
+        phim = phim.map((el,index) => {
             return {
                 _id: el._id,
                 tenPhim: el.tenPhim,
@@ -20,10 +21,11 @@ router.get('/', async function (req, res, next) {
                 icon: el.icon,
                 dienVien: el.dienVien,
                 rapPhim: el.rapPhim,
+                indexPlusOne: index + 1,
 
             }
         });
-        res.render('phim', { p: phim })
+        res.render('phim', { p: phim,startIndex })
 
     } catch (error) {
         console.log(error);
