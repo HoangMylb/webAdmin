@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sửa Rạp Phim</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Cập nhật tin tức</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+
+        <form role="form" action="/tintuc/{{rp._id}}/edit" method="post" enctype="application/x-www-form-urlencoded">
+          <div class="input-group mb-3">
+            <input type="text" name="title" class="form-control" placeholder="nội dung"
+              value="{{rp.title}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="chitiet" class="form-control" placeholder="chi tiết" value="{{rp.chitiet}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+        
+          <div class="input-group mb-3">
+            <input type="text" name="image" class="form-control" placeholder=" hình phim" value="{{rp.image}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn btn-primary btn-block" value="Edit">Cập nhật</button>
+            <a href="/tintuc" class="btn btn-block btn-danger">
+              <i class="#"></i> Hủy
+            </a>
+
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+    <!-- /.col -->
+
+    <!-- /.col -->
+  </div>
+
+
+
+  <!-- /.login-card-body -->
+  </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+
+
+</body>
+
+</html>
