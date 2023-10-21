@@ -25,7 +25,7 @@ var khachHangRoutes = require('./routes/khachHang')
 var rapPhimRoutes = require('./routes/rapPhim')
 var phimRoutes = require('./routes/phim')
 var dienVienRoutes = require('./routes/dienVien')
-
+var tintucRoutes = require('./routes/tintuc')
 var loginRoutes = require('./routes/login')
 
 // view engine setup
@@ -45,7 +45,7 @@ app.use('/rapphim', rapPhimRoutes);
 app.use('/phim', phimRoutes);
 app.use('/dienVien', dienVienRoutes);
 app.use('/login', loginRoutes);
-
+app.use('/tintuc',tintucRoutes);
 
 
 // catch 404 and forward to error handler

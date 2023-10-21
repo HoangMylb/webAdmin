@@ -89,20 +89,37 @@ router.get('/:id/edit', async  (req, res, next)  =>{
 router.post('/:id/edit',async function(req, res, next) {
     let _id = req.params.id;
     try {
-        //lấy giá trị name từ body
         let { tenRapPhim, diaChi, SDT, hinh } = req.body;
-            
-        let newData = {
-            tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
-          };
-        await rapPhimController.update(_id, newData);
-        console.log("Update OK");
-        res.redirect('/rapphim');
+        let errors=[];
+        if (tenRapPhim.length <= 0) {
+            errors.push("Không để trống tên Rạp");
+        }
+        if (diaChi.length <= 0) {
+            errors.push("Không để trống địa chỉ");
+        }
+        if (SDT.length <= 0) {
+            errors.push("Không để trống số điện thoại");
+        }
+        if (hinh.length <= 0) {
+            errors.push("Không để trống hình ảnh");
+        }
+        if (errors.length > 0) {
+            res.render('rapPhimUpdate', { errors, tenRapPhim, diaChi, SDT, hinh, _id });
+        }else{
+            let ojDB = {
+                tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
+            }
+            await rapPhimController.update(_id,ojDB);
+            console.log("sửa thành công");
+            res.redirect('/rapphim');
+        }
+       
 
     } catch (err) {
         console.error(err);
         res.status(500).send("Chưa sửa được");
     }
 });
+
 
 module.exports = router;

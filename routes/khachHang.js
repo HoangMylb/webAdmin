@@ -85,16 +85,152 @@ router.post('/newKhachHang',async function(req, res, next) {
       res.status(500).send("Chưa thêm được");
   }
 });
-router.get('/getThongTin', async  (req, res, next)  =>{
+router.post('/SuaHoTen', async  (req, res, next)  =>{
   
-  let { _id  } = req.body;
+  let { _id, tenKhachHang  } = req.body;
   try {
-      let phim = await khachHangController.getById(_id);
-      res.status(200).json({phim});
+      let khachHang = await khachHangController.updateHoTen(_id,tenKhachHang);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
       
   } catch (error) {
-      console.log('không lấy được'+error);
+      console.log('không sửa được'+error);
   }
 });
-
+router.post('/SuaSDT', async  (req, res, next)  =>{
+  
+  let { _id, SDT  } = req.body;
+  try {
+      let khachHang = await khachHangController.updateSDT(_id,SDT);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
+      
+  } catch (error) {
+      console.log('không sửa được'+error);
+  }
+});
+router.post('/SuaNgaySinh', async  (req, res, next)  =>{
+  
+  let { _id, ngaySinh  } = req.body;
+  try {
+      let khachHang = await khachHangController.updateNgaySinh(_id,ngaySinh);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
+      
+  } catch (error) {
+      console.log('không sửa được'+error);
+  }
+});
+router.post('/SuaEmail', async  (req, res, next)  =>{
+  
+  let { _id, userName  } = req.body;
+  try {
+      let khachHang = await khachHangController.updateEmail(_id,userName);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
+      
+  } catch (error) {
+      console.log('không sửa được'+error);
+  }
+});
+router.post('/SuaGioiTinh', async  (req, res, next)  =>{
+  
+  let { _id, gioiTinh  } = req.body;
+  try {
+      let khachHang = await khachHangController.updateGioiTinh(_id,gioiTinh);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
+      
+  } catch (error) {
+      console.log('không sửa được'+error);
+  }
+});
+router.post('/SuaPassWord', async  (req, res, next)  =>{
+  
+  let { _id, passWord, rePassWord  } = req.body;
+  try {
+      let khachHang = await khachHangController.updatePassWord(_id,passWord, rePassWord);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
+      
+  } catch (error) {
+      console.log('không sửa được'+error);
+  }
+});
+router.get('/getId', async  (req, res, next)  =>{
+  
+  const { _id } = req.query;
+  try {
+    const result = await khachHangController.getById(_id);
+    res.status(200).json({
+      success: true,
+       message: result,
+       
+    });
+     
+  } catch (error) {
+      console.log('không lấy được được'+error);
+      res.status(500).json({ success: false, message: 'Có lỗi xảy ra.' });
+  }
+});
 module.exports = router;

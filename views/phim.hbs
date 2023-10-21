@@ -88,6 +88,12 @@
                   <p>Diễn viên</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="./tintuc" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tin tức</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -125,7 +131,7 @@
                     <tr>
                       {{!-- tenPhim,theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim
                       --}}
-                      <th style="width: 90px;">Số thứ tự</th>
+                      <th style="width: 50px;">STT</th>
                       <th style="width: 90px;">Tên phim</th>
                       <th style="width: 90px;">Thể loại phim</th>
                       <th style="width: 90px;">Trailer Phim</th>
@@ -135,6 +141,7 @@
                       <th style="width: 90px;">Icon</th>
                       <th style="width: 90px;">Diễn Viên</th>
                       <th style="width: 90px;">Rạp Phim</th>
+                      <th style="width: 90px;">IconStart</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,6 +163,7 @@
                       <td><img src="{{icon}}" width="50px" height="50px" alt=""></td>
                       <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{dienVien}}</td>
                       <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{rapPhim}}</td>
+                      <td><img src="{{iconStart}}" width="50px" height="50px" alt=""></td>
                       <td>
                         <button onclick="goUpdate('{{_id}}');" class="btn btn-primary btn-block" style="width: 90px;">Cập nhật</button>
                       </td>

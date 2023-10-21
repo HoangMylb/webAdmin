@@ -37,7 +37,7 @@ router.post('/newDienVien', async function (req, res, next) {
             errors.push("Không để trống tên Rạp");
         }
         if (hinhAnh.length <= 0) {
-            errors.push("Không để trống địa chỉ");
+            errors.push("Không để trống địa chỉ hình ảnhỉ");
         }
 
         if (errors.length > 0) {
@@ -51,9 +51,6 @@ router.post('/newDienVien', async function (req, res, next) {
             console.log("Đã thêm vào collection 'DienVien'");
             res.redirect('/dienVien');
         }
-
-
-
     } catch (err) {
         console.error(err);
         res.status(500).send("Chưa thêm được");
@@ -85,20 +82,31 @@ router.get('/:id/edit', async (req, res, next) => {
 router.post('/:id/edit', async function (req, res, next) {
     let _id = req.params.id;
     try {
-        //lấy giá trị name từ body
-        let { tenDienVien, hinhAnh } = req.body;
-        let ojDB = {
-            tenDienVien: tenDienVien, hinhAnh: hinhAnh
-        }
-        await dienVienController.update(_id, ojDB);
+       //lấy giá trị name từ body
+       let { tenDienVien, hinhAnh } = req.body;
+       let errors = [];
+       if (tenDienVien.length <= 0) {
+           errors.push("Không để trống tên Rạp");
+       }
+       if (hinhAnh.length <= 0) {
+           errors.push("Không để trống địa chỉ hình ảnh");
+       }
 
-        res.redirect('/dienVien');
+       if (errors.length > 0) {
+           res.render('dienVienUpdate', { errors, tenDienVien, hinhAnh,_id });
+       } else {
+           let ojDB = {
+               tenDienVien: tenDienVien, hinhAnh: hinhAnh
+           }
 
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Chưa sửa được");
-    }
+           await dienVienController.update(_id,ojDB);
+           console.log("Sửa thành công");
+           res.redirect('/dienVien');
+       }
+   } catch (err) {
+       console.error(err);
+       res.status(500).send("Chưa sửa được");
+   }
 });
 
 module.exports = router;

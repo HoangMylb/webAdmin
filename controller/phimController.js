@@ -54,11 +54,44 @@ async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, 
     console.error("Lỗi khi thêm phim:", error);
   }
 }
-async function update (_id, newData){
+
+async function update (_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim,   iconStart){
   try {
-   await Phim.updateOne({ _id}, newData);
+
+    let errors=[];
+    const rapPhimArray = rapPhim.split(',').map((item) => item.trim()); // Tách chuỗi thành mảng và loại bỏ khoảng trắng
+    const dienVienArray = dienVien.split(',').map((item) => item.trim()); // Tách chuỗi thành mảng và loại bỏ khoảng trắng
+
+    const existingRapPhim = await RapPhim.find({ tenRapPhim: { $in: rapPhimArray } });// kiểm tra xem phần thêm vào đã có trong bảng thể loại chưa nếu cái nào chưa thì sẽ không được thêm vào
+    const existingDienVien = await DienVien.find({ tenDienVien: { $in: dienVienArray } });
+
+    //lọc _id và những thứ khác ngoài rapPhim
+    const existingRapPhimNames = existingRapPhim.map((rapPhim) => rapPhim.tenRapPhim);
+    const existingDienVienNames = existingDienVien.map((dienVien) => dienVien.tenDienVien);
+
+    const nonExistingRapPhim = rapPhimArray.filter((rapPhim) => !existingRapPhimNames.includes(rapPhim));
+    const nonExistingDienVien = dienVienArray.filter((dienVien) => !existingDienVienNames.includes(dienVien));
+
+    if (nonExistingRapPhim.length === 0 && nonExistingDienVien.length === 0) {
+      const phimMoi = await Phim.updateOne({ _id: _id },{ tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, 
+        dienVien: existingDienVien.map((dienVien) => dienVien._id), rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), iconStart });
+      console.log(phimMoi)
+      return { success: true, message: "Cập nhật phim thành công" };
+    } else {
+      if (nonExistingRapPhim.length != 0) {
+        errors.push("những Rạp phim này chưa có: " + nonExistingRapPhim);
+      }
+      if (nonExistingDienVien.length != 0) {  
+        errors.push("những Diễn viên này chưa có: " + nonExistingDienVien);
+      }
+      if (errors.length > 0) {
+        return { success: false, message: errors };
+      }
+    }
+
+
   } catch (error) {
-   console.log(error);
+    console.error("Lỗi khi Sửa phim:", error);
   }
 }
 async function del (_id){
