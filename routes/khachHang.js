@@ -233,4 +233,26 @@ router.get('/getId', async  (req, res, next)  =>{
       res.status(500).json({ success: false, message: 'Có lỗi xảy ra.' });
   }
 });
+router.post('/SuaHinhAnh', async  (req, res, next)  =>{
+  
+  let { _id, hinhAnh  } = req.body;
+  try {
+      let khachHang = await khachHangController.updateHinhAnh(_id,hinhAnh);
+      if(khachHang.success){
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }else{
+        res.status(200).json({
+          message: khachHang.message,
+          success:  khachHang.success
+        });
+      }
+      
+      
+  } catch (error) {
+      console.log('không sửa được'+error);
+  }
+});
 module.exports = router;

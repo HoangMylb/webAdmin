@@ -290,4 +290,23 @@ async function updatePassWord(_id, passWord,rePassWord) {
     return { success: false, message: 'Lỗi trong quá trình cập nhật' };
   }
 }
-module.exports = { newKhachHang, getByVaiTro, login, loginAdmin, updateHoTen, getById,updateSDT,updateNgaySinh,updateEmail,updateGioiTinh,updatePassWord }
+async function updateHinhAnh(_id, hinhAnh) {
+  try {
+    const errors = [];
+    if (!hinhAnh) {
+      errors.push('Không để trống Hình ảnh');
+    }
+
+    if (errors.length > 0) {
+      return { success: false, message: errors };
+    }
+    else {
+      await KhachHang.findOneAndUpdate({ _id }, {hinhAnh});
+      return { success: true, message: 'Cập nhật thành công' };
+    }
+  } catch (error) {
+    console.log(error);
+    return { success: false, message: 'Lỗi trong quá trình cập nhật' };
+  }
+}
+module.exports = { newKhachHang, getByVaiTro, login, loginAdmin,updateHinhAnh, updateHoTen, getById,updateSDT,updateNgaySinh,updateEmail,updateGioiTinh,updatePassWord }
