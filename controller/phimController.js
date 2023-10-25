@@ -10,7 +10,16 @@ async function getAll() {
     console.log(error);
   }
 }
-
+async function getFirstThree() {
+  try {
+    let phim = await Phim.find({});
+    // Sử dụng slice để lấy 3 phần tử đầu tiên
+    let firstThree = phim.slice(0, 3);
+    return firstThree;
+  } catch (error) {
+    console.log(error);
+  }
+}
 async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart) {
 
   try {
@@ -113,4 +122,4 @@ async function getById(_id) {
 }
 
 
-module.exports = { createPhim, getAll, update, del, getById}
+module.exports = { createPhim, getAll, update, del, getById,getFirstThree}

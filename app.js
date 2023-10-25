@@ -27,7 +27,7 @@ var phimRoutes = require('./routes/phim')
 var dienVienRoutes = require('./routes/dienVien')
 var tintucRoutes = require('./routes/tintuc')
 var loginRoutes = require('./routes/login')
-
+var yeuThichRoutes = require('./routes/yeuThich')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -46,7 +46,7 @@ app.use('/phim', phimRoutes);
 app.use('/dienVien', dienVienRoutes);
 app.use('/login', loginRoutes);
 app.use('/tintuc',tintucRoutes);
-
+app.use('/yeuthich',yeuThichRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

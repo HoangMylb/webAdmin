@@ -108,5 +108,20 @@ router.post('/:id/edit', async function (req, res, next) {
        res.status(500).send("Chưa sửa được");
    }
 });
+//JSON app
+router.get('/getDienVien', async function (req, res, next) {
+    try {
+        const _id = req.query._id.split(',');
 
+
+        let dienVien = await dienVienController.getDienVien(_id);
+        res.status(200).json({
+            success: true,
+             message: dienVien,
+             
+          });
+    } catch (error) {
+        console.log(error);
+    }
+});
 module.exports = router;

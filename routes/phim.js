@@ -34,6 +34,19 @@ router.get('/', async function (req, res, next) {
         console.log(error);
     }
 });
+router.get('/PhimHome', async function (req, res, next) {
+    try {
+       
+        let phim = await phimController.getFirstThree();
+        res.status(200).json({
+            success: true,
+             message: phim,
+             
+          });
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 router.get('/newPhim', function (req, res, next) {
     res.render('newPhim')
@@ -193,5 +206,20 @@ router.post('/:id/edit',async function(req, res, next) {
         res.status(500).send("Chưa sửa được");
     }
 });
-
+router.get('/getIdPhim', async  (req, res, next)  =>{
+  
+    const { _id } = req.query;
+    try {
+      const result = await phimController.getById(_id);
+      res.status(200).json({
+        success: true,
+         message: result,
+         
+      });
+       
+    } catch (error) {
+        console.log('không lấy được được'+error);
+        res.status(500).json({ success: false, message: 'Có lỗi xảy ra.' });
+    }
+  });
 module.exports = router;
