@@ -30,7 +30,7 @@ router.get('/', async function(req, res, next) {
  });
  router.get('/getYeuThich', async function(req, res, next) {
     try {
-        let { persons } = req.body;
+        const { persons } = req.query;
         let yeuthich = await yeuThichController.getYeuthich(persons);
         res.status(200).json({
             success: true,
@@ -43,7 +43,7 @@ router.get('/', async function(req, res, next) {
  router.post('/xoaYeuThich', async (req, res, next) => {
     let { persons, phim } = req.body;
     try {
-        await yeuThichController.del(_id);
+        await yeuThichController.del( persons, phim );
         res.status(200).json({
             success: true,
              message: "Xoá thành công",
@@ -52,4 +52,22 @@ router.get('/', async function(req, res, next) {
         console.error();
     }
 })
+router.get('/kiemTraYeuThich', async function(req, res, next) {
+    try {
+        const { persons,phim } = req.query;
+        let yeuthich = await yeuThichController.kiemTraYeuThich(persons,phim);
+        if (yeuthich) {
+            res.status(200).json({
+                success: true,
+            });
+        } else {
+            res.status(200).json({
+                success: false,
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+ });
+
 module.exports = router;

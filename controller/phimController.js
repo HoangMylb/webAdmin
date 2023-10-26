@@ -20,6 +20,18 @@ async function getFirstThree() {
     console.log(error);
   }
 }
+async function getMangPhim(_id) {
+  try {
+  
+    // Sử dụng Phim.find với $in operator để tìm tất cả các mục có _id trong mảng _ids
+    const phims = await Phim.find({ _id: { $in: _id } });
+    
+    return phims;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
 async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart) {
 
   try {
@@ -122,4 +134,4 @@ async function getById(_id) {
 }
 
 
-module.exports = { createPhim, getAll, update, del, getById,getFirstThree}
+module.exports = { createPhim, getAll, update, del, getById,getFirstThree,getMangPhim}

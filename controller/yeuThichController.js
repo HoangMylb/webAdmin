@@ -40,6 +40,25 @@ async function getYeuthich(persons) {
     console.log(error);
   }
 }
+// controller.js
+async function kiemTraYeuThich(persons, phim) {
+  try {
+    // Tìm các dòng dữ liệu trong bảng yeuthich có persons và phim tương ứng
+    const yeuThich = await YeuThich.find({ persons, phim });
+    
+    // Nếu có dòng dữ liệu phù hợp, trả về true
+    if (yeuThich.length > 0) {
+      return true;
+    } else {
+      // Nếu không có dòng dữ liệu phù hợp, trả về false
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    // Trả về false nếu có lỗi xảy ra trong quá trình truy vấn
+    return false;
+  }
+}
 
 
-module.exports = { getAll, del, getYeuthich,createYeuThich}
+module.exports = { getAll, del, getYeuthich,createYeuThich,kiemTraYeuThich}
