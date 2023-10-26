@@ -22,9 +22,9 @@ async function insert (title, chitiet, image){
   }
 }
 
-async function update (_id, newData){
+async function update (_id, title, chitiet, image){
   try {
-   await Tintuc.updateOne({ _id}, newData);
+   await Tintuc.updateOne({ _id},{ title, chitiet, image});
   } catch (error) {
    console.log(error);
   }

@@ -101,7 +101,7 @@ router.post('/:id/edit',async function(req, res, next) {
             res.render('newTinTuc', { errors, title, chitiet, image });
         }else{
             
-            await tintucController.update(_id, title, chitiet, image,_id );
+            await tintucController.update(_id, title, chitiet, image);
             console.log("Đã thêm vào collection 'TinTuc'");
             res.redirect('/tintuc');
         }

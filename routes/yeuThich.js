@@ -43,7 +43,7 @@ router.get('/', async function(req, res, next) {
  router.post('/xoaYeuThich', async (req, res, next) => {
     let { persons, phim } = req.body;
     try {
-        await yeuThichController.del(persons, phim);
+        await yeuThichController.del(_id);
         res.status(200).json({
             success: true,
              message: "Xoá thành công",
