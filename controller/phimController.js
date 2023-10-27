@@ -32,7 +32,7 @@ async function getMangPhim(_id) {
     console.log(error);
   }
 }
-async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart) {
+async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai) {
 
   try {
 
@@ -53,7 +53,7 @@ async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, 
 
     if (nonExistingRapPhim.length === 0 && nonExistingDienVien.length === 0) {
       const phimMoi = new Phim({ tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, 
-        rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), dienVien: existingDienVien.map((dienVien) => dienVien._id), iconStart });
+        rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), dienVien: existingDienVien.map((dienVien) => dienVien._id), iconStart, trangThai });
 
       await phimMoi.save();
       console.log(phimMoi)
@@ -76,7 +76,7 @@ async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, 
   }
 }
 
-async function update (_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim,   iconStart){
+async function update (_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim,   iconStart, trangThai){
   try {
 
     let errors=[];
@@ -95,7 +95,7 @@ async function update (_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim
 
     if (nonExistingRapPhim.length === 0 && nonExistingDienVien.length === 0) {
       const phimMoi = await Phim.updateOne({ _id: _id },{ tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, 
-        dienVien: existingDienVien.map((dienVien) => dienVien._id), rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), iconStart });
+        dienVien: existingDienVien.map((dienVien) => dienVien._id), rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), iconStart,trangThai });
       console.log(phimMoi)
       return { success: true, message: "Cập nhật phim thành công" };
     } else {

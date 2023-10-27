@@ -20,44 +20,51 @@
     <div class="card">
       <div class="card-body login-card-body">
 
-        <form role="form" action="/phim/{{p._id}}{{_id}}/edit" method="post" enctype="application/x-www-form-urlencoded">
-        <div class="input-group mb-3">
-            <input type="text" name="tenPhim" id="tenPhim" class="form-control" placeholder="Tên Phim" value="{{p.tenPhim}}{{tenPhim}}">
+        <form role="form" action="/phim/{{p._id}}{{_id}}/edit" method="post"
+          enctype="application/x-www-form-urlencoded">
+          <div class="input-group mb-3">
+            <input type="text" name="tenPhim" id="tenPhim" class="form-control" placeholder="Tên Phim"
+              value="{{p.tenPhim}}{{tenPhim}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="theLoaiPhim" id="theLoaiPhim" class="form-control" placeholder="Thể loại phim"value="{{p.theLoaiPhim}}{{theLoaiPhim}}">
+            <input type="text" name="theLoaiPhim" id="theLoaiPhim" class="form-control" placeholder="Thể loại phim"
+              value="{{p.theLoaiPhim}}{{theLoaiPhim}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="trailer" id="trailer" class="form-control" placeholder="Trailer" value="{{p.trailer}}{{trailer}}">
-            <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
-            </div>
-          </div>
-           <div class="input-group mb-3">
-            <input type="text" name="poster" id="poster" class="form-control" placeholder="Poster" value="{{p.poster}}{{poster}}">
+            <input type="text" name="trailer" id="trailer" class="form-control" placeholder="Trailer"
+              value="{{p.trailer}}{{trailer}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="thoiLuongPhim" id="thoiLuongPhim" class="form-control" placeholder="Thời lượng phim" value="{{p.thoiLuongPhim}}{{thoiLuongPhim}}">
+            <input type="text" name="poster" id="poster" class="form-control" placeholder="Poster"
+              value="{{p.poster}}{{poster}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="noiDungPhim" id="noiDungPhim" class="form-control" placeholder="Nội dung phim" value="{{p.noiDungPhim}}{{noiDungPhim}}">
+            <input type="text" name="thoiLuongPhim" id="thoiLuongPhim" class="form-control"
+              placeholder="Thời lượng phim" value="{{p.thoiLuongPhim}}{{thoiLuongPhim}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="noiDungPhim" id="noiDungPhim" class="form-control" placeholder="Nội dung phim"
+              value="{{p.noiDungPhim}}{{noiDungPhim}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
@@ -71,40 +78,50 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="dienVien" id="dienVien" class="form-control" placeholder="Diễn Viên" value="{{arrayTenDienVien}}{{dienVien}}">
-            <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
-            </div>
-          </div>
-           <div class="input-group mb-3">
-            <input type="text" name="rapPhim" id="rapPhim" class="form-control" placeholder="Rạp Phim" value="{{arrayTenRapPhim}}{{rapPhim}}">
+            <input type="text" name="dienVien" id="dienVien" class="form-control" placeholder="Diễn Viên"
+              value="{{arrayTenDienVien}}{{dienVien}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="iconStart" id="iconStart" class="form-control" placeholder="iconStart" value="{{p.iconStart}}{{iconStart}}">
+            <input type="text" name="rapPhim" id="rapPhim" class="form-control" placeholder="Rạp Phim"
+              value="{{arrayTenRapPhim}}{{rapPhim}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
-
+          <div class="input-group mb-3">
+            <input type="text" name="iconStart" id="iconStart" class="form-control" placeholder="iconStart"
+              value="{{p.iconStart}}{{iconStart}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="trangThai" id="trangThai" class="form-control" placeholder="trangThai"
+              value="{{p.trangThai}}{{trangThai}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
           <div class="row">
             <button type="submit" class="btn btn-primary btn-block" value="Edit">Cập nhật</button>
             <a href="/phim" class="btn btn-block btn-danger">
               <i class="#"></i> Hủy
             </a>
           </div>
-           {{#if errors}}
+          {{#if errors}}
           <div class="alert alert-danger" style="margin-top: 20px;">
             <ul>
               {{#each errors}}
               <li>{{this}}</li>
               {{/each}}
-              
+
             </ul>
           </div>
           {{/if}}

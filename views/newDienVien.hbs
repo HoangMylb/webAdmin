@@ -52,7 +52,15 @@
             </ul>
           </div>
           {{/if}}
-          
+          {{#if errors2}}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+            <ul>
+              {{#each errors2}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/if}}
         </form>
 
       </div>

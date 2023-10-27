@@ -8,16 +8,24 @@ async function getAll() {
     console.log(error);
   }
 }
-async function insert(db) {
-
+async function insert(tenDienVien, hinhAnh) {
   try {
-    const item = new DienVien(db);
-    await item.save();
+    const count = await DienVien.countDocuments({ tenDienVien });
 
+    if (count > 0) {
+      console.log(count);
+      return { success: false, message: "Diễn viên này đã có rồi" };
+      
+    } else {
+      const item = new DienVien({ tenDienVien, hinhAnh });
+      await item.save();
+      return { success: true, message: "Thêm phim thành công" };
+    }
   } catch (error) {
     console.log(error);
   }
 }
+
 async function update(_id, newData) {
   try {
     await DienVien.updateOne({ _id }, newData);

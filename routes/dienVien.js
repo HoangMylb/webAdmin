@@ -33,23 +33,30 @@ router.post('/newDienVien', async function (req, res, next) {
         //lấy giá trị name từ body
         let { tenDienVien, hinhAnh } = req.body;
         let errors = [];
+        let errors2 = [];
         if (tenDienVien.length <= 0) {
             errors.push("Không để trống tên Rạp");
         }
         if (hinhAnh.length <= 0) {
-            errors.push("Không để trống địa chỉ hình ảnhỉ");
+            errors.push("Không để trống địa chỉ hình ảnh");
         }
 
         if (errors.length > 0) {
             res.render('newDienVien', { errors, tenDienVien, hinhAnh });
         } else {
-            let ojDB = {
-                tenDienVien: tenDienVien, hinhAnh: hinhAnh
-            }
-
-            await dienVienController.insert(ojDB);
-            console.log("Đã thêm vào collection 'DienVien'");
+            
+            let dienvien = await dienVienController.insert(tenDienVien, hinhAnh);
+            if (dienvien.success) {
+                console.log(""+dienvien.message);
             res.redirect('/dienVien');
+            }else{
+                errors2.push(dienvien.message);
+                if (errors2.length > 0) {
+                    res.render('newDienVien', { errors2, tenDienVien, hinhAnh });
+                }
+                
+            }
+            
         }
     } catch (err) {
         console.error(err);

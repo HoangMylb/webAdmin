@@ -24,6 +24,7 @@ router.get('/', async function (req, res, next) {
                 dienVien: el.dienVien,
                 rapPhim: el.rapPhim,
                 iconStart: el.iconStart,
+                trangThai: el.trangThai,
                 indexPlusOne: index + 1,
 
             }
@@ -54,7 +55,7 @@ router.get('/newPhim', function (req, res, next) {
 router.post('/newPhim', async function (req, res, next) {
     try {
         //lấy giá trị name từ body
-        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart } = req.body;
+        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai } = req.body;
         let errors = [];
 
         if (tenPhim.length <= 0) {
@@ -87,10 +88,13 @@ router.post('/newPhim', async function (req, res, next) {
         if (iconStart.length <= 0) {
             errors.push("Không để trống iconStart");
         }
+        if (trangThai.length <= 0) {
+            errors.push("Không để trống trangThai");
+        }
         if (errors.length > 0) {
-            res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart });
+            res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai });
         } else {
-            let phim = await phimController.createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart);
+            let phim = await phimController.createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai);
 
             if (phim.success) {
                 console.log("Đã thêm vào collection 'Phim'");
@@ -100,7 +104,7 @@ router.post('/newPhim', async function (req, res, next) {
                 for (let index = 0; index < phim.message.length; index++) {
                     errors.push(phim.message[index]);
                 }
-                res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart });
+                res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai });
             }
 
         }
@@ -152,7 +156,7 @@ router.post('/:id/edit', async function (req, res, next) {
     let _id = req.params.id;
     try {
         //lấy giá trị name từ body
-        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart } = req.body;
+        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai } = req.body;
         let errors = [];
 
         if (tenPhim.length <= 0) {
@@ -185,10 +189,13 @@ router.post('/:id/edit', async function (req, res, next) {
         if (iconStart.length <= 0) {
             errors.push("Không để trống iconStart");
         }
+        if (trangThai.length <= 0) {
+            errors.push("Không để trống trangThai");
+        }
         if (errors.length > 0) {
-            res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, _id });
+            res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai, _id });
         } else {
-            let phim = await phimController.update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart);
+            let phim = await phimController.update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai);
 
             if (phim.success) {
                 console.log("Đã thêm vào collection 'Phim'");
@@ -198,7 +205,7 @@ router.post('/:id/edit', async function (req, res, next) {
                 for (let index = 0; index < phim.message.length; index++) {
                     errors.push(phim.message[index]);
                 }
-                res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, _id });
+                res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai,_id });
             }
         }
     } catch (err) {
