@@ -112,5 +112,16 @@ router.post('/:id/edit',async function(req, res, next) {
         res.status(500).send("Chưa thêm được");
     }
  });
-
+ router.get('/getAll', async function(req, res, next) {
+    try {
+        let tintuc = await tintucController.getAll();
+        res.status(200).json({
+            success: true,
+            message: tintuc
+        });
+        
+    } catch (error) {
+        console.log(error);
+    }
+ });
 module.exports = router;

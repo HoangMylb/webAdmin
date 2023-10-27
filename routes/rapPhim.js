@@ -120,6 +120,20 @@ router.post('/:id/edit',async function(req, res, next) {
         res.status(500).send("Chưa sửa được");
     }
 });
-
+//JSON react native
+router.get('/getAll', async function(req, res, next) {
+    try {
+        
+        let rapPhim = await rapPhimController.getAll();
+        res.status(200).json({
+            success: true,
+            message: rapPhim
+        });
+       
+        
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 module.exports = router;
