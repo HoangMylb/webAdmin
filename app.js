@@ -24,8 +24,8 @@ var app = express();
 var khachHangRoutes = require('./routes/khachHang')
 var rapPhimRoutes = require('./routes/rapPhim')
 var phimRoutes = require('./routes/phim')
-
 var loginRoutes = require('./routes/login')
+const UserRouter = require('./routes/User');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +43,7 @@ app.use('/khachhang', khachHangRoutes);
 app.use('/rapphim', rapPhimRoutes);
 app.use('/phim', phimRoutes);
 app.use('/login', loginRoutes);
+app.use('/user', UserRouter);
 
 
 
