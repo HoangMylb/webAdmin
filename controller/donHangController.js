@@ -20,11 +20,11 @@ async function getDonHangUser(user) {
     return { success: false, message: "Thất bại getDonHangUser" };
   }
 }
-async function createDonHang(user, phim,rapPhim, ngayDat, xuatChieu, ghe, soLuong, tien) {
+async function createDonHang(user, phim,rapPhim, ngayDat, xuatChieu, ghe, soLuong, phongChieu, tien) {
 
   try {
 
-      const donHang = new DonHang({ user, phim,rapPhim, ngayDat,xuatChieu, ghe, soLuong, tien });
+      const donHang = new DonHang({ user, phim,rapPhim, ngayDat,xuatChieu, ghe, soLuong, phongChieu,tien });
 
       await donHang.save();
       

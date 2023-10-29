@@ -135,5 +135,20 @@ router.get('/getAll', async function(req, res, next) {
         console.log(error);
     }
 });
+router.get('/getIdRapPhim', async (req, res, next) => {
 
+    const { _id } = req.query;
+    try {
+        const result = await rapPhimController.getById(_id);
+        res.status(200).json({
+            success: true,
+            message: result,
+
+        });
+
+    } catch (error) {
+        console.log('không lấy được được' + error);
+        res.status(500).json({ success: false, message: 'Có lỗi xảy ra.' });
+    }
+});
 module.exports = router;
