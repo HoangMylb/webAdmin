@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Tin tức</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>New tin tức</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+
+        <form role="form" action="/tintuc/newTintuc" method="post" enctype="application/x-www-form-urlencoded">
+          <div class="input-group mb-3">
+            <input type="text" name="title" id="title" class="form-control" placeholder="Nội dung"
+              value="{{title}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="chitiet" id="chitiet" class="form-control" placeholder="Chi tiết" value="{{chitiet}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+        
+          <div class="input-group mb-3">
+            <input type="text" name="image" id="image" class="form-control" placeholder="Hình phim" value="{{image}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn btn-primary btn-block" value="Edit">Tạo</button>
+            <a href="/tintuc" class="btn btn-block btn-danger">
+              <i class="#"></i> Hủy
+            </a>
+          </div>
+          {{#if errors}}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+
+            <ul>
+              {{#each errors}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/if}}
+        </form>
+
+      </div>
+
+    </div>
+    <!-- /.col -->
+
+    <!-- /.col -->
+  </div>
+
+
+
+  <!-- /.login-card-body -->
+  </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+
+
+</body>
+
+</html>

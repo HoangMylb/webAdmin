@@ -20,31 +20,31 @@
     <div class="card">
       <div class="card-body login-card-body">
 
-        <form role="form" action="/rapphim/{{rp._id}}/edit" method="post" enctype="application/x-www-form-urlencoded">
+        <form role="form" action="/rapphim/{{rp._id}}{{_id}}/edit" method="post" enctype="application/x-www-form-urlencoded">
           <div class="input-group mb-3">
             <input type="text" name="tenRapPhim" class="form-control" placeholder="Tên rạp phim"
-              value="{{rp.tenRapPhim}}">
+              value="{{rp.tenRapPhim}}{{tenRapPhim}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="diaChi" class="form-control" placeholder="Địa chỉ" value="{{rp.diaChi}}">
+            <input type="text" name="diaChi" class="form-control" placeholder="Địa chỉ" value="{{rp.diaChi}}{{diaChi}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="SDT" class="form-control" placeholder="Số điện thoại" value="{{rp.SDT}}">
+            <input type="text" name="SDT" class="form-control" placeholder="Số điện thoại" value="{{rp.SDT}}{{SDT}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="hinh" class="form-control" placeholder="Địa chỉ hình rạp" value="{{rp.hinh}}">
+            <input type="text" name="hinh" class="form-control" placeholder="Địa chỉ hình rạp" value="{{rp.hinh}}{{hinh}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
@@ -58,6 +58,16 @@
             </a>
 
           </div>
+          {{#if errors}}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+
+            <ul>
+              {{#each errors}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/if}}
         </form>
 
       </div>

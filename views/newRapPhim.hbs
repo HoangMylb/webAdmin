@@ -22,36 +22,51 @@
 
         <form role="form" action="/rapphim/newRapPhim" method="post" enctype="application/x-www-form-urlencoded">
           <div class="input-group mb-3">
-            <input type="text" name="tenRapPhim" id="tenRapPhim" class="form-control" placeholder="Tên rạp phim">
+            <input type="text" name="tenRapPhim" id="tenRapPhim" class="form-control" placeholder="Tên rạp phim"
+              value="{{tenRapPhim}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="diaChi" id="diaChi" class="form-control" placeholder="Địa chỉ">
+            <input type="text" name="diaChi" id="diaChi" class="form-control" placeholder="Địa chỉ" value="{{diaChi}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="SDT" id="SDT" class="form-control" placeholder="Số điện thoại">
+            <input type="text" name="SDT" id="SDT" class="form-control" placeholder="Số điện thoại" value="{{SDT}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="hinh" id="hinh" class="form-control" placeholder="Địa chỉ hình rạp">
+            <input type="text" name="hinh" id="hinh" class="form-control" placeholder="Địa chỉ hình rạp"
+              value="{{hinh}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
-          <div class="col-20">
+          <div class="row">
             <button type="submit" class="btn btn-primary btn-block" value="Edit">Tạo</button>
+            <a href="/rapphim" class="btn btn-block btn-danger">
+              <i class="#"></i> Hủy
+            </a>
           </div>
+          {{#if errors}}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+
+            <ul>
+              {{#each errors}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/if}}
         </form>
 
       </div>

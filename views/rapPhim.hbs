@@ -22,14 +22,21 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <button onclick="goNew();" type="submit" class="btn btn-primary btn-block">Thêm mới</button>
         </li>
       </ul>
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <button onclick="goNew();" type="submit" class="btn btn-primary btn-block">Thêm mới</button>
+          <img src="https://firebasestorage.googleapis.com/v0/b/fir-cinemaapp-dcbcf.appspot.com/o/ImageUser.png?alt=media&token=07b4b15d-4dcf-402b-88c0-87a987022e19&_gl=1*td1yd*_ga*MTQ3NDUwNTMwMy4xNjk1NDY8NTE2MDEwMjcy*_ga_CW55HF8NVT*MTY5NzAxOTM0OC40LjAuMC4xLjAuMC4w" width="60px" height="60px" alt="">
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+         <a href="/login" class="nav-link">
+                  <p>Đăng xuất !</p>
+                </a>
         </li>
       </ul>
     </nav>
@@ -56,8 +63,8 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
             <ul class="nav nav-treeview">
-               <li class="nav-item">
-                <a  href="./rapphim" class="nav-link active">
+              <li class="nav-item">
+                <a href="./rapphim" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Rạp phim</p>
                 </a>
@@ -74,129 +81,23 @@
                   <p>Phim</p>
                 </a>
               </li>
-              {{!-- // khoảng cách của cái đăng xuất --}}
-              <div>
-                  
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
+              
+              <li class="nav-item">
+                <a href="./dienvien" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Diễn viên</p>
                 </a>
               </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
+              <li class="nav-item">
+                <a href="./tintuc" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tin tức</p>
                 </a>
               </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-                <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-                <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <p></p>
-                </a>
-              </li>
-              </div>
-              {{!-- //kết thúc khoảng cách --}}
-                <li class="nav-item">
-                <a href="/login" class="nav-link">
-                  <p>Đăng xuất</p>
+              <li class="nav-item">
+                <a href="./donhang" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Đơn hàng</p>
                 </a>
               </li>
             </ul>
@@ -234,7 +135,7 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>ID rạp phim</th>
+                      <th>STT</th>
                       <th>Tên rạp phim</th>
                       <th>Địa chỉ</th>
                       <th>SDT</th>
@@ -244,16 +145,16 @@
                   <tbody>
                     {{#each rp}}
                     <tr>
-                      <td>{{_id}}</td>
+                      <td style="text-align: center;">{{indexPlusOne}}</td>
                       <td>{{tenRapPhim}}</td>
                       <td>{{diaChi}}</td>
                       <td>{{SDT}}</td>
                       <td><img src="{{hinh}}" width="100px" height="100px" alt=""></td>
                       <td>
-                        <button onclick="goUpdate('{{_id}}');" class="btn btn-primary btn-block">Cập nhật</button>
+                        <button onclick="goUpdate('{{_id}}');" class="btn btn-primary btn-block"style="width: 60px;">Sửa</button>
                       </td>
                       <td>
-                        <a href="#" onclick="fDel('{{_id}}');" class="btn btn-block btn-danger">
+                        <a href="#" onclick="fDel('{{_id}}');" class="btn btn-block btn-danger" style="width: 60px;">
                           <i class="#"></i> Xóa
                         </a>
                       </td>

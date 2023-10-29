@@ -7,18 +7,20 @@ const rapPhimController = require('../controller/rapPhimController');
 
 router.get('/', async function(req, res, next) {
     try {
+        const startIndex = 1;
         let rapPhim = await rapPhimController.getAll();
-        rapPhim = rapPhim.map(el => {
+        rapPhim = rapPhim.map((el,index) => {
             return {
                 _id: el._id,
                 tenRapPhim: el.tenRapPhim,
                 diaChi: el.diaChi,
                 SDT: el.SDT,
                 hinh: el.hinh,
+                indexPlusOne: index + 1,
 
             }
         });
-        res.render('rapPhim', { rp: rapPhim })
+        res.render('rapPhim', { rp: rapPhim,startIndex })
         
     } catch (error) {
         console.log(error);
@@ -32,16 +34,30 @@ router.post('/newRapPhim',async function(req, res, next) {
     try {
         //lấy giá trị name từ body
         let { tenRapPhim, diaChi, SDT, hinh } = req.body;
-
-        
-        let ojDB = {
-            tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
+        let errors=[];
+        if (tenRapPhim.length <= 0) {
+            errors.push("Không để trống tên Rạp");
         }
-        
-
-        await rapPhimController.insert(ojDB);
-        console.log("Đã thêm vào collection 'RapPhim'");
-        res.redirect('/rapphim');
+        if (diaChi.length <= 0) {
+            errors.push("Không để trống địa chỉ");
+        }
+        if (SDT.length <= 0) {
+            errors.push("Không để trống số điện thoại");
+        }
+        if (hinh.length <= 0) {
+            errors.push("Không để trống hình ảnh");
+        }
+        if (errors.length > 0) {
+            res.render('newRapPhim', { errors, tenRapPhim, diaChi, SDT, hinh });
+        }else{
+            let ojDB = {
+                tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
+            }
+            await rapPhimController.insert(ojDB);
+            console.log("Đã thêm vào collection 'RapPhim'");
+            res.redirect('/rapphim');
+        }
+       
 
     } catch (err) {
         console.error(err);
@@ -73,19 +89,50 @@ router.get('/:id/edit', async  (req, res, next)  =>{
 router.post('/:id/edit',async function(req, res, next) {
     let _id = req.params.id;
     try {
-        //lấy giá trị name từ body
         let { tenRapPhim, diaChi, SDT, hinh } = req.body;
-            
-        let newData = {
-            tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
-          };
-        await rapPhimController.update(_id, newData);
-        console.log("Update OK");
-        res.redirect('/rapphim');
+        let errors=[];
+        if (tenRapPhim.length <= 0) {
+            errors.push("Không để trống tên Rạp");
+        }
+        if (diaChi.length <= 0) {
+            errors.push("Không để trống địa chỉ");
+        }
+        if (SDT.length <= 0) {
+            errors.push("Không để trống số điện thoại");
+        }
+        if (hinh.length <= 0) {
+            errors.push("Không để trống hình ảnh");
+        }
+        if (errors.length > 0) {
+            res.render('rapPhimUpdate', { errors, tenRapPhim, diaChi, SDT, hinh, _id });
+        }else{
+            let ojDB = {
+                tenRapPhim: tenRapPhim, diaChi: diaChi, SDT: SDT, hinh: hinh
+            }
+            await rapPhimController.update(_id,ojDB);
+            console.log("sửa thành công");
+            res.redirect('/rapphim');
+        }
+       
 
     } catch (err) {
         console.error(err);
         res.status(500).send("Chưa sửa được");
+    }
+});
+//JSON react native
+router.get('/getAll', async function(req, res, next) {
+    try {
+        
+        let rapPhim = await rapPhimController.getAll();
+        res.status(200).json({
+            success: true,
+            message: rapPhim
+        });
+       
+        
+    } catch (error) {
+        console.log(error);
     }
 });
 

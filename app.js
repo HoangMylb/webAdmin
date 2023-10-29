@@ -24,8 +24,16 @@ var app = express();
 var khachHangRoutes = require('./routes/khachHang')
 var rapPhimRoutes = require('./routes/rapPhim')
 var phimRoutes = require('./routes/phim')
+
 var loginRoutes = require('./routes/login')
 const UserRouter = require('./routes/User');
+
+var dienVienRoutes = require('./routes/dienVien')
+var tintucRoutes = require('./routes/tintuc')
+var loginRoutes = require('./routes/login')
+var yeuThichRoutes = require('./routes/yeuThich')
+var paymentRoutes = require('./routes/paymentRoutes')
+var donHangRoutes = require('./routes/donHang')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,10 +50,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/khachhang', khachHangRoutes);
 app.use('/rapphim', rapPhimRoutes);
 app.use('/phim', phimRoutes);
+app.use('/dienVien', dienVienRoutes);
 app.use('/login', loginRoutes);
+
 app.use('/user', UserRouter);
 
 
+app.use('/tintuc',tintucRoutes);
+app.use('/yeuthich',yeuThichRoutes);
+app.use('/payments', paymentRoutes);
+app.use('/donhang', donHangRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

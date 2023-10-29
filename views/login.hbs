@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,9 +20,9 @@
     <div class="card">
       <div class="card-body login-card-body">
 
-        <form action="/rapphim">
+        <form role="form" action="/login" method="post" enctype="application/x-www-form-urlencoded">
           <div class="input-group mb-3">
-            <input type="email" id="userName" name="userName" class="form-control" placeholder="Email">
+            <input type="email" id="userName" name="userName" class="form-control" placeholder="Email" value="{{userName}}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -30,14 +30,17 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" id="passWord" name="passWord" class="form-control" placeholder="Password">
+            <input type="password" id="passWord" name="passWord" class="form-control" placeholder="Password" value="{{passWord}}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <button type="submit" onclick="check();" class="btn btn-primary btn-block" value="Edit">Đăng nhập</button>
+          <button type="submit" onclick="check()" class="btn btn-primary btn-block" value="Edit">Đăng nhập</button>
+          {{#if error}}
+          <div class="alert alert-danger" style="margin-top: 20px;">{{error}}</div>
+          {{/if}}
         </form>
 
 
@@ -46,29 +49,119 @@
       <!-- /.login-card-body -->
     </div>
   </div>
-  <!-- /.login-box -->
+  
+</body>
 
-  <!-- jQuery -->
-  <script>
+</html> --}}
+<!DOCTYPE html>
+<html lang="en">
 
-    function check() {
-      let userName = document.getElementById("userName").value;
-      let passWord = document.getElementById("passWord").value;
-      if (userName.length === 0 || passWord.length === 0) {
-        alert("Không để trống Username hoặc Password")
-      } else {
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in</title>
 
-        if (userName === "abc1@gmail.com" && passWord === "abc123") {
-          alert("Đăng nhập thành công")
-          window.location.href = `/rapphim`;
-          
-        } else {
-          alert("Sai Username hoặc Password")
-        }
-      }
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom CSS for your login page -->
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
     }
 
-  </script>
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .login-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 2px solid #800000;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+    }
+
+    .login-logo a {
+      font-size: 24px;
+      color: #ff6600;
+    }
+
+    .form-control {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #ff6600;
+    }
+
+    .form-control::placeholder {
+      color: #fff;
+    }
+
+    .input-group-text {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #ff6600;
+    }
+
+    .btn-primary {
+      background-color: #ff6600;
+      border-color: #ff6600;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: #ff4500;
+      border-color: #ff4500;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body class="hold-transition login-page">
+  <!-- Video Background -->
+  <video class="video-background" autoplay loop muted>
+    <source src="https://firebasestorage.googleapis.com/v0/b/fir-cinemaapp-dcbcf.appspot.com/o/Information%20User%2FSnapSave.io-INTRO%20Gi%E1%BB%9Bi%20Thi%E1%BB%87u%20Phim%20Nh%C6%B0%20R%E1%BA%A1p(720p).mp4?alt=media&token=c6af9fb9-a1f4-4150-a869-31c493d1c2b3&_gl=1*qaqra*_ga*MTY3NjEyNTMzOC4xNjk3MzU5OTA1*_ga_CW55HF8NVT*MTY5ODU0NzU4My40Mi4xLjE2OTg1NDc2NDguNjAuMC4w" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Đăng nhập</b></a>
+    </div>
+    <div class="card">
+      <div class="card-body login-card-body">
+        <form role="form" action="/login" method="post" enctype="application/x-www-form-urlencoded">
+          <div class="input-group mb-3">
+            <input type="email" id="userName" name="userName" class="form-control" placeholder="Email" value="{{userName}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" id="passWord" name="passWord" class="form-control" placeholder="Password" value="{{passWord}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <button type="submit" onclick="check()" class="btn btn-primary btn-block" value="Edit">Đăng nhập</button>
+          {{#if error}}
+          <div class="alert alert-danger" style="margin-top: 20px;">{{error}}</div>
+          {{/if}}
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
