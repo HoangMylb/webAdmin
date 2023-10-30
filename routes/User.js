@@ -47,85 +47,167 @@ const production = 'https://radiant-meadow-44726.herokuapp.com/';
 const currentUrl = process.env.NODE_ENV ? production : development;
 
 // Signup
-router.post('/signup', (req, res) => {
-    let { name, email, password, dateOfBirth } = req.body;
-    name = name.trim();
-    email = email.trim();
-    password = password.trim();
-    dateOfBirth = dateOfBirth.trim();
+// router.post('/signup', (req, res) => {
+//     let { name, email, password, dateOfBirth } = req.body;
+//     name = name.trim();
+//     email = email.trim();
+//     password = password.trim();
+//     dateOfBirth = dateOfBirth.trim();
 
-    if (name == "" || email == "" || password == "" || dateOfBirth == "") {
+//     if (name == "" || email == "" || password == "" || dateOfBirth == "") {
+//         res.json({
+//             status: 'FAILED',
+//             message: 'Empty input fields!',
+//         });
+//     } else if (!/^[a-zA-Z ]*$/.test(name)) {
+//         res.json({
+//             status: 'FAILED',
+//             message: 'Invalid name entered',
+//         });
+//     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+//         res.json({
+//             status: 'FAILED',
+//             message: 'Invalid email entered',
+//         });
+//     } else if (!new Date(dateOfBirth).getTime()) {
+//         res.json({
+//             status: 'FAILED',
+//             message: 'Invalid date of birth entered',
+//         });
+//     } else if (password.length < 8) {
+//         res.json({
+//             status: 'FAILED',
+//             message: 'Password is too short!',
+//         });
+//     } else {
+//         // Checking if user already exists
+//         User.find({ email })
+//             .then((result) => {
+//                 if (result.length) {
+//                     // A user already exists
+//                     res.json({
+//                         status: 'FAILED',
+//                         message: 'User with the provided email already exists',
+//                     });
+//                 } else {
+//                     // Try to create new user
+
+//                     // password handling
+//                     const saltRounds = 10;
+//                     bcrypt
+//                         .hash(password, saltRounds)
+//                         .then((hashedPassword) => {
+//                             const newUser = new User({
+//                                 name,
+//                                 email,
+//                                 password: hashedPassword,
+//                                 dateOfBirth,
+//                                 verified: false,
+//                             });
+
+//                             newUser
+//                                 .save()
+//                                 .then((result) => {
+//                                     // Handle account verification
+//                                     // sendVerificationEmail(result, res);
+//                                     sendOTPVerificationEmail(result, res);
+//                                 })
+//                                 .catch((err) => {
+//                                     console.log(err);
+//                                     res.json({
+//                                         status: 'FAILED',
+//                                         message: 'An error occurred while saving user account!',
+//                                     });
+//                                 });
+//                         })
+//                         .catch((err) => {
+//                             res.json({
+//                                 status: 'FAILED',
+//                                 message: 'An error occurred while hashing password!',
+//                             });
+//                         })
+//                 }
+//             })
+//             .catch((err) => {
+//                 console.log(err)
+//                 res.json({
+//                     status: 'FAILED',
+//                     message: 'An error occurred while checking for existing user!',
+//                 });
+//             })
+//     }
+// });
+
+router.post('/signup', async (req, res) => {
+    let { email } = req.body;
+    email = email.trim();
+
+    if (email == "") {
         res.json({
             status: 'FAILED',
             message: 'Empty input fields!',
-        });
-    } else if (!/^[a-zA-Z ]*$/.test(name)) {
-        res.json({
-            status: 'FAILED',
-            message: 'Invalid name entered',
         });
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
         res.json({
             status: 'FAILED',
             message: 'Invalid email entered',
         });
-    } else if (!new Date(dateOfBirth).getTime()) {
-        res.json({
-            status: 'FAILED',
-            message: 'Invalid date of birth entered',
-        });
-    } else if (password.length < 8) {
-        res.json({
-            status: 'FAILED',
-            message: 'Password is too short!',
-        });
     } else {
         // Checking if user already exists
         User.find({ email })
-            .then((result) => {
+            .then(async (result) => {
                 if (result.length) {
                     // A user already exists
-                    res.json({
-                        status: 'FAILED',
-                        message: 'User with the provided email already exists',
-                    });
+                    try {
+                        const userId = result[0]._id;
+                   
+                           if (!userId || !email) {
+                               throw Error('Empty user details are not allowed');
+                           } else {
+                               // delete existing records and resend
+                               await UserOTPVerification.deleteMany({ userId });
+                               sendOTPVerificationEmail({ _id: userId, email }, res);
+                           }
+                       } catch (error) {
+                           res.json({
+                               status: 'FAILED',
+                               message: error.message,
+                           });
+                       }
+                    
                 } else {
                     // Try to create new user
+                    try {
+                        const newUser = new User({
+                            
+                            email,
+                            
+                            verified: false,
+                        });
 
-                    // password handling
-                    const saltRounds = 10;
-                    bcrypt
-                        .hash(password, saltRounds)
-                        .then((hashedPassword) => {
-                            const newUser = new User({
-                                name,
-                                email,
-                                password: hashedPassword,
-                                dateOfBirth,
-                                verified: false,
-                            });
-
-                            newUser
-                                .save()
-                                .then((result) => {
-                                    // Handle account verification
-                                    // sendVerificationEmail(result, res);
-                                    sendOTPVerificationEmail(result, res);
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                    res.json({
-                                        status: 'FAILED',
-                                        message: 'An error occurred while saving user account!',
-                                    });
+                        newUser
+                            .save()
+                            .then((result) => {
+                                // Handle account verification
+                                // sendVerificationEmail(result, res);
+                                console.log('result' +result._id);
+                                sendOTPVerificationEmail(result, res);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                res.json({
+                                    status: 'FAILED',
+                                    message: 'An error occurred while saving user account!',
                                 });
-                        })
-                        .catch((err) => {
-                            res.json({
-                                status: 'FAILED',
-                                message: 'An error occurred while hashing password!',
                             });
-                        })
+                    } catch (error) {
+                        res.json({
+                            status: 'FAILED',
+                            message: 'An error occurred while hashing password!',
+                        });
+                    }
+                    // password handling
+                
                 }
             })
             .catch((err) => {
@@ -138,17 +220,19 @@ router.post('/signup', (req, res) => {
     }
 });
 
-// send otp verification email
+
 const sendOTPVerificationEmail = async ({ _id, email }, res) => {
     try {
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        // <b>${otp}</b>
+        const chair = 'H01'
 
         // mail options
         const mailOptions = {
             form: process.env.AUTH_EMAIL,
             to: email,
             subject: 'Verify Your Email',
-            html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup process.</br>
+            html: `<p>Ghế: ${otp}.</br>
             <p>This code <b>expires in 1 hour</b>.</p>`
         };
 
@@ -180,6 +264,50 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         });
     }
 }
+
+
+// send otp verification email
+// const sendOTPVerificationEmail = async ({ _id, email }, res) => {
+//     try {
+//         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+//         // mail options
+//         const mailOptions = {
+//             form: process.env.AUTH_EMAIL,
+//             to: email,
+//             subject: 'Verify Your Email',
+//             html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup process.</br>
+//             <p>This code <b>expires in 1 hour</b>.</p>`
+//         };
+
+//         // hash the otp
+//         const saltRounds = 10;
+
+//         const hashedOTP = await bcrypt.hash(otp, saltRounds);
+//         const newOTPVerification = await new UserOTPVerification({
+//             userId: _id,
+//             otp: hashedOTP,
+//             createdAt: Date.now(),
+//             expiresAt: Date.now() + 3600000,
+//         });
+//         // save otp record
+//         await newOTPVerification.save();
+//         await transporter.sendMail(mailOptions);
+//         res.json({
+//             status: 'PENDING',
+//             message: 'Verification otp email sent',
+//             data: {
+//                 userId: _id,
+//                 email,
+//             },
+//         });
+//     } catch (error) {
+//         res.json({
+//             status: 'FAILED',
+//             message: error.message,
+//         });
+//     }
+// }
 
 // Verify otp email
 router.post('/verifyOTP', async (req, res) => {
