@@ -48,7 +48,45 @@ router.get('/PhimHome', async function (req, res, next) {
         console.log(error);
     }
 });
+router.get('/PhimDangChieu', async function (req, res, next) {
+    try {
 
+        let phim = await phimController.getPhimDangChieu();
+        res.status(200).json({
+            success: true,
+            message: phim,
+
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+router.get('/PhimHomeSC', async function (req, res, next) {
+    try {
+
+        let phim = await phimController.getFirstThreeSC();
+        res.status(200).json({
+            success: true,
+            message: phim,
+
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+router.get('/PhimSapChieu', async function (req, res, next) {
+    try {
+
+        let phim = await phimController.getPhimSapChieu();
+        res.status(200).json({
+            success: true,
+            message: phim,
+
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
 router.get('/newPhim', function (req, res, next) {
     res.render('newPhim')
 });

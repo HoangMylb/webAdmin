@@ -116,6 +116,20 @@ router.post('/:id/edit', async function (req, res, next) {
    }
 });
 //JSON app
+router.get('/getAll', async function (req, res, next) {
+    try {
+      
+        let dienVien = await dienVienController.getAll();
+        res.status(200).json({
+            success: true,
+             message: dienVien,
+             
+          });
+
+    } catch (error) {
+        console.log(error);
+    }
+});
 router.get('/getDienVien', async function (req, res, next) {
     try {
         const _id = req.query._id.split(',');
