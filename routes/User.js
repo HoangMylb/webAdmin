@@ -220,6 +220,8 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+// PHƯỚC MẬP BÁO THỦ
+
 
 const sendOTPVerificationEmail = async ({ _id, email }, res) => {
     try {
