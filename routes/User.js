@@ -139,7 +139,7 @@ const currentUrl = process.env.NODE_ENV ? production : development;
 // });
 
 router.post('/signup', async (req, res) => {
-    let { email } = req.body;
+    let { email, trangThai } = req.body;
     email = email.trim();
 
     if (email == "") {
@@ -156,7 +156,7 @@ router.post('/signup', async (req, res) => {
         // Checking if user already exists
         User.find({ email })
             .then(async (result) => {
-                if (result.length) {
+                if (result.length&& trangThai ==="OTP") {
                     // A user already exists
                     try {
                         const userId = result[0]._id;
@@ -223,62 +223,18 @@ router.post('/signup', async (req, res) => {
 // PHƯỚC MẬP BÁO THỦ
 
 
-const sendOTPVerificationEmail = async ({ _id, email }, res) => {
-    try {
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-        // <b>${otp}</b>
-        const chair = 'H01'
-
-        // mail options
-        const mailOptions = {
-            form: process.env.AUTH_EMAIL,
-            to: email,
-            subject: 'Verify Your Email',
-            html: `<p>Ghế: ${otp}.</br>
-            <p>This code <b>expires in 1 hour</b>.</p>`
-        };
-
-        // hash the otp
-        const saltRounds = 10;
-
-        const hashedOTP = await bcrypt.hash(otp, saltRounds);
-        const newOTPVerification = await new UserOTPVerification({
-            userId: _id,
-            otp: hashedOTP,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 3600000,
-        });
-        // save otp record
-        await newOTPVerification.save();
-        await transporter.sendMail(mailOptions);
-        res.json({
-            status: 'PENDING',
-            message: 'Verification otp email sent',
-            data: {
-                userId: _id,
-                email,
-            },
-        });
-    } catch (error) {
-        res.json({
-            status: 'FAILED',
-            message: error.message,
-        });
-    }
-}
-
-
-// send otp verification email
-// const sendOTPVerificationEmail = async ({ _id, email }, res) => {
+// const sendHistory = async ({ _id, email }, res) => {
 //     try {
 //         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+//         // <b>${otp}</b>
+//         const chair = 'H01'
 
 //         // mail options
 //         const mailOptions = {
 //             form: process.env.AUTH_EMAIL,
 //             to: email,
 //             subject: 'Verify Your Email',
-//             html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup process.</br>
+//             html: `<p>Ghế: ${otp}.</br>
 //             <p>This code <b>expires in 1 hour</b>.</p>`
 //         };
 
@@ -310,6 +266,50 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
 //         });
 //     }
 // }
+
+
+//send otp verification email
+const sendOTPVerificationEmail = async ({ _id, email }, res) => {
+    try {
+        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+        // mail options
+        const mailOptions = {
+            form: process.env.AUTH_EMAIL,
+            to: email,
+            subject: 'Verify Your Email',
+            html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup process.</br>
+            <p>This code <b>expires in 1 hour</b>.</p>`
+        };
+
+        // hash the otp
+        const saltRounds = 10;
+
+        const hashedOTP = await bcrypt.hash(otp, saltRounds);
+        const newOTPVerification = await new UserOTPVerification({
+            userId: _id,
+            otp: hashedOTP,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 3600000,
+        });
+        // save otp record
+        await newOTPVerification.save();
+        await transporter.sendMail(mailOptions);
+        res.json({
+            status: 'PENDING',
+            message: 'Verification otp email sent',
+            data: {
+                userId: _id,
+                email,
+            },
+        });
+    } catch (error) {
+        res.json({
+            status: 'FAILED',
+            message: error.message,
+        });
+    }
+}
 
 // Verify otp email
 router.post('/verifyOTP', async (req, res) => {
