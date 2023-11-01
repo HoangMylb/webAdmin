@@ -25,6 +25,7 @@ rapPhim: [
     xuatChieu: String,
     ghe: String,
     soLuong: Number,
+    phongChieu: Number,
     tien: Number,
     
 });

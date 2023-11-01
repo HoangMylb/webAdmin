@@ -9,34 +9,36 @@
   <style>
     /* Set height to 100% of viewport height for specific list items */
     .nav-item.menu-open {
-      height: 100vh;
+       height: 100vh;
+       background-color: #000;
       /* 100% of viewport height */
     }
   </style>
 </head>
 
+
+
 <body class="hold-transition sidebar-mini">
+
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <p style="margin-left: 10px;font-size: 20px;font-weight: 700;">    Tổng doanh thu: </p>
-        </li>
-      </ul>
+      
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <img src="https://firebasestorage.googleapis.com/v0/b/fir-cinemaapp-dcbcf.appspot.com/o/ImageUser.png?alt=media&token=07b4b15d-4dcf-402b-88c0-87a987022e19&_gl=1*td1yd*_ga*MTQ3NDUwNTMwMy4xNjk1NDY8NTE2MDEwMjcy*_ga_CW55HF8NVT*MTY5NzAxOTM0OC40LjAuMC4xLjAuMC4w" width="60px" height="60px" alt="">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/fir-cinemaapp-dcbcf.appspot.com/o/ImageUser.png?alt=media&token=07b4b15d-4dcf-402b-88c0-87a987022e19&_gl=1*td1yd*_ga*MTQ3NDUwNTMwMy4xNjk1NDY8NTE2MDEwMjcy*_ga_CW55HF8NVT*MTY5NzAxOTM0OC40LjAuMC4xLjAuMC4w"
+            width="60px" height="60px" alt="">
         </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-         <a href="/login" class="nav-link">
-                  <p>Đăng xuất !</p>
-                </a>
+          <a href="/login" class="nav-link">
+            <p>Đăng xuất !</p>
+          </a>
         </li>
       </ul>
     </nav>
@@ -81,7 +83,7 @@
                   <p>Phim</p>
                 </a>
               </li>
-              
+
               <li class="nav-item">
                 <a href="./dienvien" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -130,39 +132,80 @@
             <div class="card">
               <div class="card-header">
               </div>
+              <tfoot>
+                <tr>
+                  <td colspan="9">
+                    <p style="margin-left: 10px; font-size: 20px; ">Tổng doanh thu: <span id="formattedTotal"></span>đ</p>
+                  </td>
+                  
+                </tr>
+              </tfoot>
               <!-- /.card-header -->
               <div class="card-body">
+
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>Số thứ tự</th>
-                      <th>ID_User</th>
-                      <th>ID_Phim</th>
-                      <th>ID_Rạp phim</th>
-                      <th>Ngày đặt vé</th>
-                      <th>Xuất chiếu</th>
-                      <th>Ghế</th>
-                      <th>Số lượng vé</th>
-                      <th>Chi phí</th>
+                      <th
+                        style="max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        STT</th>
+                      <th
+                        style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        ID_User</th>
+                      <th
+                        style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        ID_Phim</th>
+                      <th
+                        style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        ID_Rạp phim</th>
+                      <th
+                        style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        Ngày đặt vé</th>
+                      <th
+                        style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        Xuất chiếu</th>
+                      <th
+                        style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        Ghế</th>
+                      <th
+                        style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        Phòng chiếu</th>
+                      <th
+                        style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        Số lượng vé</th>
+                      <th
+                        style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        Chi phí</th>
                     </tr>
                   </thead>
                   <tbody>
+
+
                     {{#each dh}}
+
                     <tr>
-                      <td  style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">{{indexPlusOne}}</td>
-                      <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{user}}</td>
-                      <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{phim}}</td>
-                      <td  style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{rapPhim}}</td>
+                      <td
+                        style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        {{indexPlusOne}}</td>
+                      <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{user}}</td>
+                      <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{phim}}</td>
+                      <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{rapPhim}}</td>
                       <td>{{ngayDat}}</td>
                       <td>{{xuatChieu}}</td>
                       <td>{{ghe}}</td>
-                      <td>{{soLuong}}</td>
-                      <td>{{tien}}</td>
+                      <td>Cinema {{phongChieu}}</td>
+                      <td style="text-align: center;">{{soLuong}}</td>
+                      <td>{{formatNumber tien}}đ </td>
+
 
                     </tr>
                     {{/each }}
 
                 </table>
+
 
               </div>
               <!-- /.card-body -->
@@ -181,10 +224,19 @@
   </div>
   </div>
   <!-- ./wrapper -->
+  <script>
+    // Giá trị ban đầu
+    var totalTien = {{totalTien dh}};
 
+    // Định dạng thành "500.000"
+    var formattedTotal = totalTien.toLocaleString('en-US');
+
+    // Đặt giá trị đã định dạng vào phần tử HTML
+    document.getElementById('formattedTotal').textContent = formattedTotal;
+  </script>
 
   <!-- Page specific script -->
-  
+
 </body>
 
 

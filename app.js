@@ -38,7 +38,16 @@ var donHangRoutes = require('./routes/donHang')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+const hbs = require('hbs');
+hbs.registerHelper('totalTien', function (donHang) {
+  // Sử dụng hàm reduce để tính tổng tiền
+  const total = donHang.reduce((accumulator, item) => accumulator + item.tien, 0);
+  return total;
+});
 
+hbs.registerHelper('formatNumber', function (number) {
+  return number.toLocaleString('en-US');
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

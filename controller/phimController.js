@@ -12,10 +12,38 @@ async function getAll() {
 }
 async function getFirstThree() {
   try {
-    let phim = await Phim.find({});
+    let phim = await Phim.find({ trangThai: "Đang chiếu"});
     // Sử dụng slice để lấy 3 phần tử đầu tiên
     let firstThree = phim.slice(0, 3);
     return firstThree;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getPhimDangChieu() {
+  try {
+    let phim = await Phim.find({ trangThai: "Đang chiếu"});
+  
+    return phim;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getFirstThreeSC() {
+  try {
+    let phim = await Phim.find({ trangThai: "Sắp chiếu"});
+    // Sử dụng slice để lấy 3 phần tử đầu tiên
+    let firstThree = phim.slice(0, 3);
+    return firstThree;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getPhimSapChieu() {
+  try {
+    let phim = await Phim.find({ trangThai: "Sắp chiếu"});
+  
+    return phim;
   } catch (error) {
     console.log(error);
   }
@@ -134,4 +162,4 @@ async function getById(_id) {
 }
 
 
-module.exports = { createPhim, getAll, update, del, getById,getFirstThree,getMangPhim}
+module.exports = {getPhimSapChieu,getFirstThreeSC,getPhimDangChieu, createPhim, getAll, update, del, getById,getFirstThree,getMangPhim}

@@ -8,7 +8,7 @@ const donHangController = require('../controller/donHangController');
 
 router.get('/', async function (req, res, next) {
     try {
-        const startIndex = 1;
+        
         let donHang = await donHangController.getAll();
         donHang = donHang.map((el, index) => {
             return {
@@ -20,11 +20,12 @@ router.get('/', async function (req, res, next) {
                 xuatChieu: el.xuatChieu,
                 ghe: el.ghe,
                 soLuong: el.soLuong,
+                phongChieu: el.phongChieu,
                 tien: el.tien,
                 indexPlusOne: index + 1,
             }
         });
-        res.render('donHang', {dh: donHang, startIndex })
+        res.render('donHang', { dh: donHang,  })
 
     } catch (error) {
         console.log(error);
@@ -36,23 +37,23 @@ router.get('/', async function (req, res, next) {
 router.post('/newDonHang', async function (req, res, next) {
     try {
         //lấy giá trị name từ body
-        let { user, phim, rapPhim,ngayDat, xuatChieu, ghe,soLuong, tien } = req.body;
-       
-        let donHang = await donHangController.createDonHang(user, phim,rapPhim, ngayDat, xuatChieu, ghe,soLuong, tien);
-        if(donHang){
+        let { user, phim, rapPhim, ngayDat, xuatChieu, ghe, soLuong, tien } = req.body;
+        var phongChieu = Math.floor(Math.random() * 10) + 1;
+        let donHang = await donHangController.createDonHang(user, phim, rapPhim, ngayDat, xuatChieu, ghe, soLuong, phongChieu, tien);
+        if (donHang) {
             res.status(200).json({
                 success: true,
-                 message: donHang.message,
-                 
-              });
-        }else{
+                message: donHang.message,
+
+            });
+        } else {
             res.status(400).json({
                 success: false,
-                 message: donHang.message,
-                 
-              });
+                message: donHang.message,
+
+            });
         }
-           
+
 
     } catch (err) {
         console.error(err);
@@ -62,23 +63,23 @@ router.post('/newDonHang', async function (req, res, next) {
 router.get('/DonHangUser', async function (req, res, next) {
     try {
         //lấy giá trị name từ body
-        let { user} = req.body;
        
+        const { user } = req.query;
         let donHang = await donHangController.getDonHangUser(user);
-        if(donHang){
+        if (donHang) {
             res.status(200).json({
                 success: true,
-                 message: donHang.message,
-                 
-              });
-        }else{
+                message: donHang.message,
+
+            });
+        } else {
             res.status(400).json({
                 success: false,
-                 message: donHang.message,
-                 
-              });
+                message: donHang.message,
+
+            });
         }
-           
+
 
     } catch (err) {
         console.error(err);
