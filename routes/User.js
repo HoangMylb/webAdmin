@@ -46,174 +46,107 @@ const development = 'http://localhost:3000/';
 const production = 'https://radiant-meadow-44726.herokuapp.com/';
 const currentUrl = process.env.NODE_ENV ? production : development;
 
-// Signup
-// router.post('/signup', (req, res) => {
-//     let { name, email, password, dateOfBirth } = req.body;
-//     name = name.trim();
-//     email = email.trim();
-//     password = password.trim();
-//     dateOfBirth = dateOfBirth.trim();
 
-//     if (name == "" || email == "" || password == "" || dateOfBirth == "") {
-//         res.json({
-//             status: 'FAILED',
-//             message: 'Empty input fields!',
-//         });
-//     } else if (!/^[a-zA-Z ]*$/.test(name)) {
-//         res.json({
-//             status: 'FAILED',
-//             message: 'Invalid name entered',
-//         });
-//     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-//         res.json({
-//             status: 'FAILED',
-//             message: 'Invalid email entered',
-//         });
-//     } else if (!new Date(dateOfBirth).getTime()) {
-//         res.json({
-//             status: 'FAILED',
-//             message: 'Invalid date of birth entered',
-//         });
-//     } else if (password.length < 8) {
-//         res.json({
-//             status: 'FAILED',
-//             message: 'Password is too short!',
-//         });
-//     } else {
-//         // Checking if user already exists
-//         User.find({ email })
-//             .then((result) => {
-//                 if (result.length) {
-//                     // A user already exists
-//                     res.json({
-//                         status: 'FAILED',
-//                         message: 'User with the provided email already exists',
-//                     });
-//                 } else {
-//                     // Try to create new user
-
-//                     // password handling
-//                     const saltRounds = 10;
-//                     bcrypt
-//                         .hash(password, saltRounds)
-//                         .then((hashedPassword) => {
-//                             const newUser = new User({
-//                                 name,
-//                                 email,
-//                                 password: hashedPassword,
-//                                 dateOfBirth,
-//                                 verified: false,
-//                             });
-
-//                             newUser
-//                                 .save()
-//                                 .then((result) => {
-//                                     // Handle account verification
-//                                     // sendVerificationEmail(result, res);
-//                                     sendOTPVerificationEmail(result, res);
-//                                 })
-//                                 .catch((err) => {
-//                                     console.log(err);
-//                                     res.json({
-//                                         status: 'FAILED',
-//                                         message: 'An error occurred while saving user account!',
-//                                     });
-//                                 });
-//                         })
-//                         .catch((err) => {
-//                             res.json({
-//                                 status: 'FAILED',
-//                                 message: 'An error occurred while hashing password!',
-//                             });
-//                         })
-//                 }
-//             })
-//             .catch((err) => {
-//                 console.log(err)
-//                 res.json({
-//                     status: 'FAILED',
-//                     message: 'An error occurred while checking for existing user!',
-//                 });
-//             })
-//     }
-// });
 
 router.post('/signup', async (req, res) => {
-    let { email } = req.body;
+    let { email, trangThai, ghe , soLuong } = req.body;
     email = email.trim();
 
     if (email == "") {
         res.json({
-            status: 'FAILED',
+            status: false,
             message: 'Empty input fields!',
         });
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
         res.json({
-            status: 'FAILED',
+            status: false,
             message: 'Invalid email entered',
         });
     } else {
         // Checking if user already exists
         User.find({ email })
             .then(async (result) => {
-                if (result.length) {
+                if (result.length && trangThai === "OTP") {
                     // A user already exists
                     try {
                         const userId = result[0]._id;
-                   
-                           if (!userId || !email) {
-                               throw Error('Empty user details are not allowed');
-                           } else {
-                               // delete existing records and resend
-                               await UserOTPVerification.deleteMany({ userId });
-                               sendOTPVerificationEmail({ _id: userId, email }, res);
-                           }
-                       } catch (error) {
-                           res.json({
-                               status: 'FAILED',
-                               message: error.message,
-                           });
-                       }
-                    
+
+                        if (!userId || !email) {
+                            throw Error('Empty user details are not allowed');
+                        } else {
+                            // delete existing records and resend
+                            await UserOTPVerification.deleteMany({ userId });
+                            sendOTPVerificationEmail({ _id: userId, email }, res);
+                        }
+                    } catch (error) {
+                        res.json({
+                            status: false,
+                            message: error.message,
+                        });
+                    }
+
+                } else if (result.length && trangThai === "lịch sử") {
+                    // A user already exists
+                    try {
+                        const userId = result[0]._id;
+
+                        if (!userId || !email) {
+                            throw Error('Empty user details are not allowed');
+                        } else {
+                            // delete existing records and resend
+                            await UserOTPVerification.deleteMany({ userId });
+                            sendHistory({ _id: userId, email, ghe , soLuong }, res);
+                        }
+                    } catch (error) {
+                        res.json({
+                            status: false,
+                            message: error.message,
+                        });
+                    }
+
                 } else {
                     // Try to create new user
                     try {
                         const newUser = new User({
-                            
                             email,
-                            
                             verified: false,
                         });
-
+                    
                         newUser
                             .save()
                             .then((result) => {
-                                // Handle account verification
-                                // sendVerificationEmail(result, res);
-                                console.log('result' +result._id);
-                                sendOTPVerificationEmail(result, res);
+                                if (trangThai === "OTP") {
+                                    sendOTPVerificationEmail(result, res);
+                                } else if (trangThai === "lịch sử") {
+                                    sendHistory(result, res);
+                                } else {
+                                    res.json({
+                                        status: false,
+                                        message: 'Invalid trangThai value!',
+                                    });
+                                }
                             })
                             .catch((err) => {
                                 console.log(err);
                                 res.json({
-                                    status: 'FAILED',
+                                    status: false,
                                     message: 'An error occurred while saving user account!',
                                 });
                             });
-                    } catch (error) {
+                    }catch (error) {
                         res.json({
-                            status: 'FAILED',
+                            status: false,
                             message: 'An error occurred while hashing password!',
                         });
                     }
                     // password handling
-                
+
                 }
             })
             .catch((err) => {
                 console.log(err)
                 res.json({
-                    status: 'FAILED',
+                    status: false,
                     message: 'An error occurred while checking for existing user!',
                 });
             })
@@ -223,18 +156,19 @@ router.post('/signup', async (req, res) => {
 // PHƯỚC MẬP BÁO THỦ
 
 
-const sendOTPVerificationEmail = async ({ _id, email }, res) => {
+const sendHistory = async ({ _id, email, ghe, soLuong }, res) => {
     try {
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        
         // <b>${otp}</b>
-        const chair = 'H01'
+
 
         // mail options
         const mailOptions = {
             form: process.env.AUTH_EMAIL,
             to: email,
             subject: 'Verify Your Email',
-            html: `<p>Ghế: ${otp}.</br>
+            html: `<p>Ghế: ${ghe}.</br>
+            <p>Số lượng vé: ${soLuong}.</br>
             <p>This code <b>expires in 1 hour</b>.</p>`
         };
 
@@ -252,7 +186,7 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         await newOTPVerification.save();
         await transporter.sendMail(mailOptions);
         res.json({
-            status: 'PENDING',
+            status: true,
             message: 'Verification otp email sent',
             data: {
                 userId: _id,
@@ -261,55 +195,55 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         });
     } catch (error) {
         res.json({
-            status: 'FAILED',
+            status: false,
             message: error.message,
         });
     }
 }
 
 
-// send otp verification email
-// const sendOTPVerificationEmail = async ({ _id, email }, res) => {
-//     try {
-//         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+//send otp verification email
+const sendOTPVerificationEmail = async ({ _id, email }, res) => {
+    try {
+        const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
 
-//         // mail options
-//         const mailOptions = {
-//             form: process.env.AUTH_EMAIL,
-//             to: email,
-//             subject: 'Verify Your Email',
-//             html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup process.</br>
-//             <p>This code <b>expires in 1 hour</b>.</p>`
-//         };
+        // mail options
+        const mailOptions = {
+            form: process.env.AUTH_EMAIL,
+            to: email,
+            subject: 'Verify Your Email',
+            html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup process.</br>
+            <p>This code <b>expires in 1 hour</b>.</p>`
+        };
 
-//         // hash the otp
-//         const saltRounds = 10;
+        // hash the otp
+        const saltRounds = 10;
 
-//         const hashedOTP = await bcrypt.hash(otp, saltRounds);
-//         const newOTPVerification = await new UserOTPVerification({
-//             userId: _id,
-//             otp: hashedOTP,
-//             createdAt: Date.now(),
-//             expiresAt: Date.now() + 3600000,
-//         });
-//         // save otp record
-//         await newOTPVerification.save();
-//         await transporter.sendMail(mailOptions);
-//         res.json({
-//             status: 'PENDING',
-//             message: 'Verification otp email sent',
-//             data: {
-//                 userId: _id,
-//                 email,
-//             },
-//         });
-//     } catch (error) {
-//         res.json({
-//             status: 'FAILED',
-//             message: error.message,
-//         });
-//     }
-// }
+        const hashedOTP = await bcrypt.hash(otp, saltRounds);
+        const newOTPVerification = await new UserOTPVerification({
+            userId: _id,
+            otp: hashedOTP,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 3600000,
+        });
+        // save otp record
+        await newOTPVerification.save();
+        await transporter.sendMail(mailOptions);
+        res.json({
+            status: true,
+            message: 'Verification otp email sent',
+            data: {
+                userId: _id,
+                email,
+            },
+        });
+    } catch (error) {
+        res.json({
+            status: false,
+            message: error.message,
+        });
+    }
+}
 
 // Verify otp email
 router.post('/verifyOTP', async (req, res) => {
@@ -341,13 +275,13 @@ router.post('/verifyOTP', async (req, res) => {
 
                     if (!validOTP) {
                         // supplied otp wrong
-                        throw new Error('Invalid code passed. Check your inbox.');
+                        throw new Error('Bạn nhập sai mã OTP. Vui lòng kiểm tra lại Email.');
                     } else {
                         // success
                         await User.updateOne({ _id: userId }, { verified: true });
                         await UserOTPVerification.deleteMany({ userId });
                         res.json({
-                            status: 'VERIFIED',
+                            status: true,
                             message: 'User email verified successfully.',
                         });
                     }
@@ -356,7 +290,7 @@ router.post('/verifyOTP', async (req, res) => {
         }
     } catch (error) {
         res.json({
-            status: 'FAILED',
+            status: false,
             message: error.message,
         });
     }
@@ -376,7 +310,7 @@ router.post('/resendOTPVerificationCode', async (req, res) => {
         }
     } catch (error) {
         res.json({
-            status: 'FAILED',
+            status: false,
             message: error.message,
         });
     }
