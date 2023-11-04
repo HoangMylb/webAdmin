@@ -30,6 +30,7 @@ var loginRoutes = require('./routes/login')
 var yeuThichRoutes = require('./routes/yeuThich')
 var paymentRoutes = require('./routes/paymentRoutes')
 var donHangRoutes = require('./routes/donHang')
+var otpRouter = require('./routes/User')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -60,6 +61,7 @@ app.use('/tintuc',tintucRoutes);
 app.use('/yeuthich',yeuThichRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/donhang', donHangRoutes);
+app.use('/otp', otpRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

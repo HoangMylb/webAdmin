@@ -55,7 +55,32 @@ router.post('/login', async function(req, res, next) {
         console.log(error);
     }
 });
+router.get('/checkOTP', async function(req, res, next) {
+  try {
+      let { userName } = req.query;
+      let khachHang = await khachHangController.checkOTP(userName);
+    if (khachHang.success) {
+      res.status(200).json({
+        message: khachHang.message,
 
+        success:  khachHang.success
+      });
+    } else {
+      res.status(200).json({
+        message: khachHang.message,
+        success:  khachHang.success
+      });
+    }
+     
+      
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: 'lỗi',
+        success:  false
+      });
+  }
+});
 router.post('/newKhachHang',async function(req, res, next) {
   try {
       //lấy giá trị name từ body
@@ -203,12 +228,14 @@ router.post('/SuaPassWord', async  (req, res, next)  =>{
       if(khachHang.success){
         res.status(200).json({
           message: khachHang.message,
-          success:  khachHang.success
+          success:  khachHang.success,
+          message1: khachHang.message1,
         });
       }else{
         res.status(200).json({
           message: khachHang.message,
-          success:  khachHang.success
+          success:  khachHang.success,
+          message1: khachHang.message1
         });
       }
       
@@ -255,4 +282,21 @@ router.post('/SuaHinhAnh', async  (req, res, next)  =>{
       console.log('không sửa được'+error);
   }
 });
+router.get('/getUser', async  (req, res, next)  =>{
+  
+  const { userName } = req.query;
+  try {
+    const result = await khachHangController.getByEmail(userName);
+    res.status(200).json({
+      success: true,
+       message: result,
+       
+    });
+     
+  } catch (error) {
+      console.log('không lấy được được'+error);
+      res.status(500).json({ success: false, message: 'Có lỗi xảy ra.' });
+  }
+});
+
 module.exports = router;
