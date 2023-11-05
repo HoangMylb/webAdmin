@@ -68,63 +68,61 @@ async function checkOTP(userName) {
 async function newKhachHang(tenKhachHang, userName, passWord, rePassWord, SDT, ngaySinh, vaiTro, gioiTinh, hinhAnh) {
 
   try {
-    const errors = [];
-    const errors2 = [];
+    
+    const errorsTen = [];
+    const errorsUser = [];
+    const errorsSDT = [];
+    const errorsGioiTinh = []; 
+    const errorsNgaySinh = [];
+    const errorPass = [];
+    const errorsRepass = [];
+
+    const errorsUser2 = [];
+    const errorsSDT2 = [];
+
     if (!tenKhachHang) {
-      errors.push('Vui lòng không để trống Họ và tên');
-    }
-    if (!userName) {
-      errors.push('Vui lòng không để trống Email');
-    }
-    if (!SDT) {
-      errors.push('Vui lòng không để trống Số điện thoại');
+      errorsTen.push('Vui lòng không để trống Họ và tên');
     }
     if (!gioiTinh) {
-      errors.push('Vui lòng không để trống Giới tính');
+      errorsGioiTinh.push('Vui lòng không để trống Giới tính');
     }
     if (!ngaySinh) {
-      errors.push('Vui lòng không để trống Ngày Sinh');
+      errorsNgaySinh.push('Vui lòng không để trống Ngày Sinh');
+    }
+    if (!userName) {
+      errorsUser.push('Vui lòng không để trống Email');
+    } else if (!isEmail(userName)) {
+      errorsUser.push('Vui lòng nhập đúng định dạng Email');
+    }
+    if (!SDT) {
+      errorsSDT.push('Vui lòng không để trống Số điện thoại');
+    } else if (!isPhoneNumber(SDT)) {
+      errorsSDT.push('Vui lòng nhập đúng dịnh dạng Số điện thoại');
     }
     if (!passWord) {
-      errors.push('Vui lòng không để trống Mật khẩu');
+      errorPass.push('Vui lòng không để trống Mật khẩu');
+    }else if (!isPassWord(passWord)) {
+      errorPass.push('Mật khẩu chỉ được nhập ít nhất 6 ký tự và dài nhất 20 ký tự');
     }
-    if (!rePassWord) {
-      errors.push('Vui lòng không để trống Xác nhận mật khẩu');
-    }
-    if (!vaiTro) {
-      errors.push('Trống vaitro');
-    }
-
-    if (!hinhAnh) {
-      errors.push('Trống hinhAnh');
-    }
-    if (!isEmail(userName)) {
-      errors2.push('Vui lòng nhập không đúng định dạng Email');
-    }
-    if (!isPhoneNumber(SDT)) {
-      errors2.push('Vui lòng nhập sai dịnh dạng Số điện thoại');
-    }
-    if (!isPassWord(passWord)) {
-      errors2.push('Mật khẩu chỉ được nhập ít nhất 6 ký tự và dài nhất 20 ký tự');
-    }
-    if (errors.length > 0) {
-      return { success: false, message: errors };
+    if (errorsTen.length > 0||errorsUser.length > 0||errorsSDT.length > 0||errorsGioiTinh.length > 0||errorsNgaySinh.length > 0||errorPass.length > 0) {
+      return { success: false, messageTen: errorsTen, messageUser: errorsUser, messageSDT: errorsSDT, 
+        messageGender: errorsGioiTinh, messageDate: errorsNgaySinh, messagePass: errorPass};
     }
     else {
       const existingUserWithEmail = await KhachHang.findOne({ userName });
       const existingUserWithSDT = await KhachHang.findOne({ SDT });
       // Kiểm tra xem email và SDT đã tồn tại trong cơ sở dữ liệu chưa
       if (existingUserWithEmail) {
-        errors2.push('Email này của bạn đã được sử dụng');
+        errorsUser2.push('Email này của bạn đã được sử dụng');
       }
       if (existingUserWithSDT) {
-        errors2.push('Số điện thoại này của bạn đã được sử dụng');
+        errorsSDT2.push('Số điện thoại này của bạn đã được sử dụng');
       }
       if (rePassWord != passWord) {
-        errors2.push('Vui lòng nhập mật khẩu không trùng nhau');
+        errorsRepass.push('Vui lòng nhập mật khẩu trùng nhau');
       }
-      if (errors2.length > 0) {
-        return { success: false, message: errors2 };
+      if (errorsUser2.length > 0||errorsSDT2.length >0||errorsRepass.length > 0) {
+        return { success: false, messageUser2: errorsUser2, messageSDT2: errorsSDT2, messageRePass: errorsRepass  };
       }
       else {
         const item = new KhachHang({ tenKhachHang, userName, passWord, SDT, ngaySinh, vaiTro, gioiTinh, hinhAnh });
