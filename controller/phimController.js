@@ -14,7 +14,7 @@ async function getFirstThree() {
   try {
     let phim = await Phim.find({ trangThai: "Đang chiếu"});
     // Sử dụng slice để lấy 3 phần tử đầu tiên
-    let firstThree = phim.slice(0, 3);
+    let firstThree = phim.slice(0, 5);
     return firstThree;
   } catch (error) {
     console.log(error);
@@ -33,7 +33,7 @@ async function getFirstThreeSC() {
   try {
     let phim = await Phim.find({ trangThai: "Sắp chiếu"});
     // Sử dụng slice để lấy 3 phần tử đầu tiên
-    let firstThree = phim.slice(0, 3);
+    let firstThree = phim.slice(0, 5);
     return firstThree;
   } catch (error) {
     console.log(error);
