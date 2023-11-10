@@ -99,9 +99,16 @@ router.post('/newKhachHang',async function(req, res, next) {
       } else {
         res.status(200).json({
           message: khachHang.message,
-          username: userName,
-          password: passWord,
-          success:  khachHang.success
+          success:  khachHang.success,
+          messageTen: khachHang.messageTen, 
+          messageUser: khachHang.messageUser, 
+          messageSDT: khachHang.messageSDT, 
+          messageGender: khachHang.messageGender, 
+          messageDate: khachHang.messageDate, 
+          messagePass: khachHang.messagePass, 
+          messageRePass: khachHang.messageRePass, 
+          messageUser2: khachHang.messageUser2, 
+          messageSDT2: khachHang.messageSDT2
         });
       }
 
