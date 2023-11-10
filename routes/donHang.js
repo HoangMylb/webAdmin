@@ -37,8 +37,8 @@ router.get('/', async function (req, res, next) {
 router.post('/newDonHang', async function (req, res, next) {
     try {
         //lấy giá trị name từ body
-        let { user, phim, rapPhim, ngayDat, xuatChieu, ghe, soLuong, tien } = req.body;
-        var phongChieu = Math.floor(Math.random() * 10) + 1;
+        let { user, phim, rapPhim, ngayDat,phongChieu, xuatChieu, ghe, soLuong, tien } = req.body;
+        
         let donHang = await donHangController.createDonHang(user, phim, rapPhim, ngayDat, xuatChieu, ghe, soLuong, phongChieu, tien);
         if (donHang) {
             res.status(200).json({

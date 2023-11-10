@@ -49,7 +49,7 @@ const currentUrl = process.env.NODE_ENV ? production : development;
 
 
 router.post('/signup', async (req, res) => {
-    let { email, trangThai, ghe , soLuong } = req.body;
+    let { email, trangThai,nguoiDat,ngayDat, phongChieu, soLuong , ghe, xuatChieu,tien } = req.body;
     email = email.trim();
 
     if (email == "") {
@@ -95,7 +95,7 @@ router.post('/signup', async (req, res) => {
                         } else {
                             // delete existing records and resend
                             await UserOTPVerification.deleteMany({ userId });
-                            sendHistory({ _id: userId, email, ghe , soLuong }, res);
+                            sendHistory({ _id: userId, email,nguoiDat,ngayDat, phongChieu, soLuong , ghe, xuatChieu,tien }, res);
                         }
                     } catch (error) {
                         res.json({
@@ -156,7 +156,7 @@ router.post('/signup', async (req, res) => {
 // PHƯỚC MẬP BÁO THỦ
 
 
-const sendHistory = async ({ _id, email, ghe, soLuong }, res) => {
+const sendHistory = async ({ _id, email,nguoiDat,ngayDat, phongChieu, soLuong , ghe, xuatChieu,tien}, res) => {
     try {
         
         // <b>${otp}</b>
@@ -166,28 +166,22 @@ const sendHistory = async ({ _id, email, ghe, soLuong }, res) => {
         const mailOptions = {
             form: process.env.AUTH_EMAIL,
             to: email,
-            subject: 'Verify Your Email',
-            html: `<p>Ghế: ${ghe}.</br>
+            subject: 'Lịch sử hóa đơn đặt vé tại Cinema App',
+            html: `
+            <p>Người đặt: ${nguoiDat}.</br>
+            <p>Ngày đặt: ${ngayDat}.</br>
+            <p>Phòng chiếu: ${phongChieu}.</br>
             <p>Số lượng vé: ${soLuong}.</br>
+            <p>Ghế: ${ghe}.</br>
+            <p>Xuất chiếu: ${xuatChieu}.</br>
+            <p>Thanh toán thành công : ${tien}.</br>
             <p>This code <b>expires in 1 hour</b>.</p>`
         };
 
-        // hash the otp
-        const saltRounds = 10;
-
-        const hashedOTP = await bcrypt.hash(otp, saltRounds);
-        const newOTPVerification = await new UserOTPVerification({
-            userId: _id,
-            otp: hashedOTP,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 3600000,
-        });
-        // save otp record
-        await newOTPVerification.save();
         await transporter.sendMail(mailOptions);
         res.json({
             status: true,
-            message: 'Verification otp email sent',
+            message: 'Đã gửi lịch sử',
             data: {
                 userId: _id,
                 email,
