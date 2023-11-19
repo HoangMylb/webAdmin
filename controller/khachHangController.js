@@ -13,7 +13,9 @@ function isPassWord(passWord) {
 
 async function getByEmail(userName) {
   try {
-    let khachHang = await KhachHang.findOne({ userName: userName });
+    
+    let khachHang = await KhachHang.find({ userName: userName,vaiTro: 'Khách hàng' });
+   
     return khachHang;
   } catch (error) {
     console.log(error);
