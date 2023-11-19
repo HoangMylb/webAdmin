@@ -294,15 +294,24 @@ router.get('/getUser', async  (req, res, next)  =>{
   const { userName } = req.query;
   try {
     const result = await khachHangController.getByEmail(userName);
-    res.status(200).json({
-      success: true,
-       message: result,
-       
-    });
+    if (result.length > 0) {
+      // Lấy thông tin của người dùng từ phần tử đầu tiên của mảng
+      const user = result[0];
+      
+      res.status(200).json({
+        success: true,
+        message: user,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: null,
+      });
+    }
      
   } catch (error) {
       console.log('không lấy được được'+error);
-      res.status(500).json({ success: false, message: 'Có lỗi xảy ra.' });
+      res.status(500).json({ success: false, message: null });
   }
 });
 
