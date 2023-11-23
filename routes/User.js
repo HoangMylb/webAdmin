@@ -175,7 +175,7 @@ const sendHistory = async ({ _id, email,nguoiDat,ngayDat, phongChieu, soLuong , 
             <p>Ghế: ${ghe}.</br>
             <p>Xuất chiếu: ${xuatChieu}.</br>
             <p>Thanh toán thành công : ${tien}.</br>
-            <p>This code <b>expires in 1 hour</b>.</p>`
+            `
         };
 
         await transporter.sendMail(mailOptions);
