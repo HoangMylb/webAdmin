@@ -25,6 +25,7 @@ router.get('/', async function (req, res, next) {
                 rapPhim: el.rapPhim,
                 iconStart: el.iconStart,
                 trangThai: el.trangThai,
+                ngay: el.ngay,
                 indexPlusOne: index + 1,
 
             }
@@ -93,12 +94,16 @@ router.get('/newPhim', function (req, res, next) {
 router.post('/newPhim', async function (req, res, next) {
     try {
         //lấy giá trị name từ body
-        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai } = req.body;
+        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai,ngay } = req.body;
         let errors = [];
 
         if (tenPhim.length <= 0) {
             errors.push("Không để trống tên phim");
         }
+        if (ngay.length <= 0) {
+            errors.push("Không để trống ngày");
+        }
+        
         if (theLoaiPhim.length <= 0) {
             errors.push("Không để trống thể loại phim");
         }
@@ -130,9 +135,9 @@ router.post('/newPhim', async function (req, res, next) {
             errors.push("Không để trống trangThai");
         }
         if (errors.length > 0) {
-            res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai });
+            res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai,ngay });
         } else {
-            let phim = await phimController.createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai);
+            let phim = await phimController.createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai,ngay);
 
             if (phim.success) {
                 console.log("Đã thêm vào collection 'Phim'");
@@ -142,7 +147,7 @@ router.post('/newPhim', async function (req, res, next) {
                 for (let index = 0; index < phim.message.length; index++) {
                     errors.push(phim.message[index]);
                 }
-                res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai });
+                res.render('newPhim', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai,ngay });
             }
 
         }
@@ -194,11 +199,14 @@ router.post('/:id/edit', async function (req, res, next) {
     let _id = req.params.id;
     try {
         //lấy giá trị name từ body
-        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai } = req.body;
+        let { tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai,ngay } = req.body;
         let errors = [];
 
         if (tenPhim.length <= 0) {
             errors.push("Không để trống tên phim");
+        }
+        if (ngay.length <= 0) {
+            errors.push("Không để ngày");
         }
         if (theLoaiPhim.length <= 0) {
             errors.push("Không để trống thể loại phim");
@@ -231,9 +239,9 @@ router.post('/:id/edit', async function (req, res, next) {
             errors.push("Không để trống trangThai");
         }
         if (errors.length > 0) {
-            res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai, _id });
+            res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai, _id,ngay });
         } else {
-            let phim = await phimController.update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai);
+            let phim = await phimController.update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart,trangThai,ngay);
 
             if (phim.success) {
                 console.log("Đã thêm vào collection 'Phim'");
@@ -243,7 +251,7 @@ router.post('/:id/edit', async function (req, res, next) {
                 for (let index = 0; index < phim.message.length; index++) {
                     errors.push(phim.message[index]);
                 }
-                res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai,_id });
+                res.render('phimUpdate', { errors, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai,_id,ngay });
             }
         }
     } catch (err) {

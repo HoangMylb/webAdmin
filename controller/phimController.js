@@ -2,7 +2,7 @@ const Phim = require('../model/phimModel');
 const RapPhim = require('../model/rapPhimModel');
 const DienVien = require('../model/dienVienModel');
 const BinhLuan = require('../model/binhLuanModel');
-async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai) {
+async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai,ngay) {
 
   try {
 
@@ -24,7 +24,7 @@ async function createPhim(tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, 
     if (nonExistingRapPhim.length === 0 && nonExistingDienVien.length === 0) {
       const phimMoi = new Phim({
         tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon,
-        rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), dienVien: existingDienVien.map((dienVien) => dienVien._id), iconStart, trangThai
+        rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), dienVien: existingDienVien.map((dienVien) => dienVien._id), iconStart, trangThai,ngay
       });
 
       await phimMoi.save();
@@ -124,7 +124,7 @@ async function getMangPhim(_id) {
 }
 
 
-async function update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai) {
+async function update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon, dienVien, rapPhim, iconStart, trangThai,ngay) {
   try {
 
     let errors = [];
@@ -144,7 +144,7 @@ async function update(_id, tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim,
     if (nonExistingRapPhim.length === 0 && nonExistingDienVien.length === 0) {
       const phimMoi = await Phim.updateOne({ _id: _id }, {
         tenPhim, theLoaiPhim, trailer, poster, thoiLuongPhim, noiDungPhim, icon,
-        dienVien: existingDienVien.map((dienVien) => dienVien._id), rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), iconStart, trangThai
+        dienVien: existingDienVien.map((dienVien) => dienVien._id), rapPhim: existingRapPhim.map((rapPhim) => rapPhim._id), iconStart, trangThai,ngay
       });
       console.log(phimMoi)
       return { success: true, message: "Cập nhật phim thành công" };
