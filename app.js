@@ -145,6 +145,7 @@ var yeuThichRoutes = require('./routes/yeuThich')
 var paymentRoutes = require('./routes/paymentRoutes')
 var donHangRoutes = require('./routes/donHang')
 var otpRouter = require('./routes/User')
+var binhLuanRoutes = require('./routes/binhluan')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -176,6 +177,7 @@ app.use('/yeuthich', yeuThichRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/donhang', donHangRoutes);
 app.use('/otp', otpRouter);
+app.use('/binhluan', binhLuanRoutes);
 
 app.get('/lichchieu', async (req, res) => {
   try {
