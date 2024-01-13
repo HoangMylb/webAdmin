@@ -24,7 +24,8 @@ const PhimSchema = new Schema({
     }
   ],
   iconStart: String,
-  trangThai: String
+  trangThai: String,
+  ngay: String
     
 });
 // Khai báo model cho collection "sanpham"

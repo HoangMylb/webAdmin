@@ -22,21 +22,21 @@
 
         <form role="form" action="/tintuc/newTintuc" method="post" enctype="application/x-www-form-urlencoded">
           <div class="input-group mb-3">
-            <input type="text" name="title" id="title" class="form-control" placeholder="Nội dung"
-              value="{{title}}">
+            <input type="text" name="title" id="title" class="form-control" placeholder="Tiêu đề" value="{{title}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" name="chitiet" id="chitiet" class="form-control" placeholder="Chi tiết" value="{{chitiet}}">
+            <input type="text" name="chitiet" id="chitiet" class="form-control" placeholder="Nội dung"
+              value="{{chitiet}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
-        
+
           <div class="input-group mb-3">
             <input type="text" name="image" id="image" class="form-control" placeholder="Hình phim" value="{{image}}">
             <div class="input-group-append">
@@ -44,6 +44,22 @@
               </div>
             </div>
           </div>
+
+          <!-- Thêm một thẻ select -->
+          <!-- Thêm một thẻ select -->
+          <div class="input-group mb-3">
+            <select name="phim" id="phim" class="form-control">
+              <!-- Sử dụng vòng lặp để tạo các tùy chọn từ danh sách phim -->
+              {{#each phim}}
+              <option value="{{_id}}">{{tenPhim}}</option>
+              {{/each}}
+            </select>
+            <div class="input-group-append">
+              <div class="input-group-text"></div>
+            </div>
+          </div>
+
+
 
           <div class="row">
             <button type="submit" class="btn btn-primary btn-block" value="Edit">Tạo</button>

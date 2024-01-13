@@ -33,7 +33,7 @@ async function checkOTP(userName) {
     }
 
     if (!isEmail(userName)) {
-      errors1.push('Vui lòng nhập không đúng định dạng Email');
+      errors1.push('Vui lòng nhập đúng định dạng Email');
     }
 
     if (errors.length > 0) {
