@@ -4,7 +4,7 @@ const DonHang = require('../model/donHangModel');
 async function getAll() {
   try {
     let donHang = await DonHang.find({});
-    console.log("donhangControl: "+ donHang);
+   
     return donHang;
   } catch (error) {
     console.log(error);
@@ -13,7 +13,7 @@ async function getAll() {
 async function getDonHangUser(user) {
   try {
     let donHang = await DonHang.find({user});
-    console.log("donhangControl: "+ donHang);
+    
     return { success: true, message: donHang };
   } catch (error) {
     console.log(error);

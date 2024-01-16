@@ -3,19 +3,30 @@ var router = express.Router();
 
 
 const donHangController = require('../controller/donHangController');
+const rapPhimController = require('../controller/rapPhimController');
+const phimController = require('../controller/phimController');
+const khachHangController = require('../controller/khachHangController');
 /* GET users listing. */
 // http://localhost:3000
 
 router.get('/', async function (req, res, next) {
     try {
-        
         let donHang = await donHangController.getAll();
-        donHang = donHang.map((el, index) => {
-            return {
+
+        // Tạo một mảng chứa tất cả các promise
+        const promises = donHang.map(async (el, index) => {
+            let rap = await rapPhimController.getById(el.rapPhim);
+            let phim = await phimController.getById(el.phim);
+            let user = await khachHangController.getById(el.user);
+           // console.log('sss', user);
+           // console.log('tenRapPhim: ', rap.tenRapPhim);
+
+            // Cập nhật giá trị trong mảng donHang
+            donHang[index] = {
                 _id: el._id,
-                user: el.user,
-                phim: el.phim,
-                rapPhim: el.rapPhim,
+                user: user.tenKhachHang,
+                phim: phim.tenPhim,
+                rapPhim:  rap.tenRapPhim,
                 ngayDat: el.ngayDat,
                 xuatChieu: el.xuatChieu,
                 ghe: el.ghe,
@@ -23,14 +34,20 @@ router.get('/', async function (req, res, next) {
                 phongChieu: el.phongChieu,
                 tien: el.tien,
                 indexPlusOne: index + 1,
-            }
+            };
         });
-        res.render('donHang', { dh: donHang,  })
+
+        // Chờ tất cả các promise hoàn thành
+        await Promise.all(promises);
+
+        res.render('donHang', { dh: donHang });
 
     } catch (error) {
         console.log(error);
     }
 });
+
+
 
 
 

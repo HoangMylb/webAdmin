@@ -150,6 +150,7 @@ var binhLuanRoutes = require('./routes/binhluan')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 const hbs = require('hbs');
+
 hbs.registerHelper('totalTien', function (donHang) {
   // Sử dụng hàm reduce để tính tổng tiền
   const total = donHang.reduce((accumulator, item) => accumulator + item.tien, 0);
