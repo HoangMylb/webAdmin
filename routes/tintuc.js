@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const tintucController = require('../controller/tintucController');
+const phimController = require('../controller/phimController');
 /* GET users listing. */
 // http://localhost:3000/rapphim
 
@@ -25,40 +26,56 @@ router.get('/', async function(req, res, next) {
         console.log(error);
     }
  });
- router.get('/newTinTuc', function(req, res, next) {
-    res.render('newTinTuc')
-    
-});
-router.post('/newTinTuc',async function(req, res, next) {
+ router.get('/newTinTuc', async function (req, res, next) {
+
     try {
-        //lấy giá trị name từ body
-        let {title , chitiet, image } = req.body;
-        let errors=[];
+
+        let phim = await phimController.getAll();
+
+        phim = phim.map((el, index) => {
+            return {
+                _id: el._id,
+                tenPhim: el.tenPhim,
+            }
+        });
+        res.render('newTinTuc', { phim: phim });
+
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+router.post('/newTinTuc', async function (req, res, next) {
+    try {
+        // Lấy giá trị từ body
+        let { title, chitiet, image, phim } = req.body;
+        let errors = [];
         if (title.length <= 0) {
             errors.push("Không để trống tiêu đề");
         }
         if (chitiet.length <= 0) {
             errors.push("Không để trống chi tiết");
         }
-        
+
         if (image.length <= 0) {
             errors.push("Không để trống hình ảnh");
         }
         if (errors.length > 0) {
-            res.render('newTinTuc', { errors, title, chitiet, image });
-        }else{
-            
-            await tintucController.insert( title, chitiet, image );
+            res.render('newTinTuc', { errors, title, chitiet, image, phim });
+        } else {
+
+            await tintucController.insert(title, chitiet, image, phim);
             console.log("Đã thêm vào collection 'TinTuc'");
             res.redirect('/tintuc');
         }
-       
 
     } catch (err) {
         console.error(err);
         res.status(500).send("Chưa thêm được");
     }
- });
+});
+
 
 router.get('/:id/del', async (req, res, next) => {
     let _id = req.params.id;
@@ -75,6 +92,7 @@ router.get('/:id/edit', async  (req, res, next)  =>{
     let _id = req.params.id;
     try {
         let tintuc = await tintucController.getById(_id);
+        
         res.render('tintucUpdate', { rp: tintuc })
         
     } catch (error) {

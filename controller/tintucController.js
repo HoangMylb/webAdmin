@@ -9,12 +9,13 @@ async function getAll (){
     console.log(error);
    }
 }
-async function insert (title, chitiet, image){
+async function insert (title, chitiet, image,phim){
   try {
       const item = new Tintuc({
           title,
           chitiet,
-          image
+          image,
+          phim
       });
       await item.save();
   } catch (error) {
