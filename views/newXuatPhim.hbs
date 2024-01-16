@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Xuất Phim</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>New Xuất Phim</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+
+        <form role="form" action="/xuatPhim/newXuatPhim" method="post" enctype="application/x-www-form-urlencoded">
+           <div class="input-group mb-3">
+            <input type="text" name="Rap" id="Rap" class="form-control" placeholder="Tên rạp Phim" value="{{Rap}}"
+            >
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="Phim" id="Phim" class="form-control" placeholder="Phim"  value="{{Phim}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="Phong" id="Phong" class="form-control" placeholder="Phòng" value="{{Phong}}"
+            >
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="ngay" id="ngay" class="form-control" placeholder="Ngày"  value="{{ngay}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="gio" id="gio" class="form-control" placeholder="Giờ"  value="{{gio}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <button type="submit" class="btn btn-primary btn-block" value="Edit">Tạo</button>
+            <a href="/xuatphim" class="btn btn-block btn-danger">
+              <i class="#"></i> Hủy
+            </a>
+          </div>
+          {{#if errors}}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+
+            <ul>
+              {{#each errors}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/if}}
+        </form>
+
+      </div>
+
+    </div>
+    <!-- /.col -->
+
+    <!-- /.col -->
+  </div>
+
+
+
+  <!-- /.login-card-body -->
+  </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+
+</body>
+
+</html>

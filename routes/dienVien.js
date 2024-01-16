@@ -26,8 +26,8 @@ router.get('/', async function (req, res, next) {
 });
 router.get('/newDienVien', function (req, res, next) {
     res.render('newDienVien')
-
 });
+
 router.post('/newDienVien', async function (req, res, next) {
     try {
         //lấy giá trị name từ body

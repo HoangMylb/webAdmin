@@ -145,7 +145,8 @@ var yeuThichRoutes = require('./routes/yeuThich')
 var paymentRoutes = require('./routes/paymentRoutes')
 var donHangRoutes = require('./routes/donHang')
 var otpRouter = require('./routes/User')
-var binhLuanRoutes = require('./routes/binhluan')
+var xuatPhimRoutes = require('./routes/xuatPhim')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -177,6 +178,7 @@ app.use('/tintuc', tintucRoutes);
 app.use('/yeuthich', yeuThichRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/donhang', donHangRoutes);
+app.use('/xuatPhim', xuatPhimRoutes);
 app.use('/otp', otpRouter);
 app.use('/binhluan', binhLuanRoutes);
 
@@ -226,12 +228,6 @@ app.put('/updateGhe', async (req, res) => {
     res.status(404).json({ message: 'Lỗi khi cập nhật dữ liệu lịch chiếu' });
   }
 });
-
-
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
