@@ -21,44 +21,67 @@
       <div class="card-body login-card-body">
 
         <form role="form" action="/xuatPhim/newXuatPhim" method="post" enctype="application/x-www-form-urlencoded">
-           <div class="input-group mb-3">
-            <input type="text" name="Rap" id="Rap" class="form-control" placeholder="Tên rạp Phim" value="{{Rap}}"
-            >
-            <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
-            </div>
-          </div>
           <div class="input-group mb-3">
-            <input type="text" name="Phim" id="Phim" class="form-control" placeholder="Phim"  value="{{Phim}}">
+            <select name="Rap" id="Rap" class="form-control">
+              <!-- Sử dụng vòng lặp để tạo các tùy chọn từ danh sách phim -->
+              {{#each rap}}
+              <option value="{{_id}}">{{tenRapPhim}}</option>
+              {{/each}}
+            </select>
             <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
+              <div class="input-group-text"></div>
             </div>
           </div>
+
           <div class="input-group mb-3">
-            <input type="text" name="Phong" id="Phong" class="form-control" placeholder="Phòng" value="{{Phong}}"
-            >
+            <select name="Phim" id="Phim" class="form-control">
+              <!-- Sử dụng vòng lặp để tạo các tùy chọn từ danh sách phim -->
+              {{#each phim}}
+              <option value="{{_id}}">{{tenPhim}}</option>
+              {{/each}}
+            </select>
             <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
+              <div class="input-group-text"></div>
             </div>
           </div>
+
           <div class="input-group mb-3">
-            <input type="text" name="ngay" id="ngay" class="form-control" placeholder="Ngày"  value="{{ngay}}">
+            <select name="Phong" id="Phong" class="form-control">
+              <!-- Sử dụng vòng lặp để tạo các tùy chọn từ danh sách phim -->
+              <option value="Cinema1">Cinema 1</option>
+              <option value="Cinema2">Cinema 2</option>
+              <option value="Cinema1">Cinema 3</option>
+              <option value="Cinema2">Cinema 4</option>
+              <option value="Cinema1">Cinema 5</option>
+              <option value="Cinema2">Cinema 6</option>
+            </select>
             <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
+              <div class="input-group-text"></div>
             </div>
           </div>
+
           <div class="input-group mb-3">
-            <input type="text" name="gio" id="gio" class="form-control" placeholder="Giờ"  value="{{gio}}">
+            <input type="text" name="ngay" id="ngay" class="form-control" placeholder="Ngày: dd-mm-yyyy" value="{{ngay}}">
             <div class="input-group-append">
               <div class="input-group-text">
               </div>
             </div>
           </div>
-          
+            <div class="input-group mb-3">
+            <select name="gio" id="gio" class="form-control" >
+              <!-- Sử dụng vòng lặp để tạo các tùy chọn từ danh sách phim -->
+              <option value="13:00">13:00</option>
+              <option value="15:00">15:00</option>
+              <option value="17:00">17:00</option>
+              <option value="19:00">19:00</option>
+              <option value="21:00">21:00</option>
+              <option value="23:00">23:00</option>
+            </select>
+            <div class="input-group-append">
+              <div class="input-group-text"></div>
+            </div>
+          </div>
+
           <div class="row">
             <button type="submit" class="btn btn-primary btn-block" value="Edit">Tạo</button>
             <a href="/xuatphim" class="btn btn-block btn-danger">

@@ -8,14 +8,14 @@ async function getAll() {
     console.log(error);
   }
 }
-async function createXuatPhim(Phong,ngay,gio,Rap,Phim) {
+async function createXuatPhim(Phong, ngay, gio, Rap, Phim) {
   try {
 
-      const xuatPhim = new XuatPhim({ Phong,ngay,gio,Rap,Phim});
+    const xuatPhim = new XuatPhim({ Phong, ngay, gio, Rap, Phim });
 
-      await xuatPhim.save();
-      
-      return { success: true, message: "Thành công XuatPhim" };
+    await xuatPhim.save();
+
+    return { success: true, message: "Thành công XuatPhim" };
 
 
   } catch (error) {
@@ -32,14 +32,14 @@ async function update(_id, ojDB) {
     console.log(error);
   }
 }
-async function insert (db){
-    
+async function insert(db) {
+
   try {
-      const item = new XuatPhim(db);
-      await item.save();
-     
+    const item = new XuatPhim(db);
+    await item.save();
+
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
 }
 async function getById(_id) {
@@ -50,5 +50,27 @@ async function getById(_id) {
     console.log(error);
   }
 }
+async function getXuatPhim(Phim, Rap) {
+  try {
+    let xuatPhim = await XuatPhim.find({ Phim, Rap });
+    if (xuatPhim.length === 0) {
+      return {
+        success: false,
+        message: null
+      };
+    } else {
+      return {
+        success: true,
+        message: xuatPhim
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: null
+    };
+  }
+}
 
-module.exports = { getAll,createXuatPhim,insert,update,getById }
+module.exports = { getAll, createXuatPhim, insert, update, getById, getXuatPhim }

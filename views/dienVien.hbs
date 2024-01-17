@@ -10,8 +10,8 @@
     /* Set height to 100% of viewport height for specific list items */
     .nav-item.menu-open {
       height: 400vh;
-   
-       background-color: #000;
+
+      background-color: #000;
       /* 100% of viewport height */
     }
 
@@ -108,12 +108,12 @@
                   <p>Đơn hàng</p>
                 </a>
               </li>
-               <li class="nav-item">
-                                <a href="./xuatphim" class="nav-link ">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Xuất phim</p>
-                                </a>
-                            </li>
+              <li class="nav-item">
+                <a href="./xuatphim" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Xuất phim</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -159,7 +159,7 @@
                     <tr>
                       <td style="text-align: center;">{{indexPlusOne}}</td>
                       <td>{{tenDienVien}}</td>
-                      <td><img src="{{hinhAnh}}"  alt=""></td>
+                      <td><img src="{{hinhAnh}}" alt=""></td>
                       <td>
                         <button onclick="goUpdate('{{_id}}');" class="btn btn-primary btn-block"
                           style="width: 60px;">Sửa</button>
@@ -210,7 +210,7 @@
     const goUpdate = (id) => {
       location.href = `/dienVien/${id}/edit`;
     }
- 
+
   </script>
 </body>
 
