@@ -218,9 +218,15 @@
         const goNew = () => {
             window.location.href = `/xuatphim/newXuatPhim`;
         }
-         const goUpdate = (id) => {
-      location.href = `/xuatphim/${id}/edit`;
-    }
+        const goUpdate = (id) => {
+            location.href = `/xuatphim/${id}/edit`;
+        }
+        const fDel = (id) => {
+            if (confirm("Bạn có muốn xóa không?")) {
+                location.href = `/xuatphim/${id}/del`;
+            }
+
+        }
     </script>
 </body>
 

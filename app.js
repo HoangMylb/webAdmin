@@ -179,7 +179,7 @@ app.use('/payments', paymentRoutes);
 app.use('/donhang', donHangRoutes);
 app.use('/xuatPhim', xuatPhimRoutes);
 app.use('/otp', otpRouter);
-app.use('/binhluan', binhLuanRoutes);
+// app.use('/binhluan', binhLuanRoutes);
 
 app.get('/lichchieu', async (req, res) => {
   try {

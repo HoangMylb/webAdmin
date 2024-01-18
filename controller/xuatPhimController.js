@@ -50,5 +50,14 @@ async function getById(_id) {
     console.log(error);
   }
 }
+async function del(_id) {
 
-module.exports = { getAll,createXuatPhim,insert,update,getById }
+  try {
+    await XuatPhim.deleteOne({ _id: _id });
+    console.log("xóa");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { getAll,createXuatPhim,insert,update,getById,del }
