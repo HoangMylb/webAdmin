@@ -8,14 +8,14 @@ async function getAll() {
     console.log(error);
   }
 }
-async function createXuatPhim(Phong,ngay,gio,Rap,Phim) {
+async function createXuatPhim(Phong, ngay, gio, Rap, Phim) {
   try {
 
-      const xuatPhim = new XuatPhim({ Phong,ngay,gio,Rap,Phim});
+    const xuatPhim = new XuatPhim({ Phong, ngay, gio, Rap, Phim });
 
-      await xuatPhim.save();
-      
-      return { success: true, message: "Thành công XuatPhim" };
+    await xuatPhim.save();
+
+    return { success: true, message: "Thành công XuatPhim" };
 
 
   } catch (error) {
@@ -23,8 +23,6 @@ async function createXuatPhim(Phong,ngay,gio,Rap,Phim) {
     return { success: false, message: "Thất bại XuatPhim" };
   }
 }
-
-
 async function update(_id, ojDB) {
   try {
     await XuatPhim.updateOne({ _id }, ojDB);
@@ -32,14 +30,14 @@ async function update(_id, ojDB) {
     console.log(error);
   }
 }
-async function insert (db){
-    
+async function insert(db) {
+
   try {
-      const item = new XuatPhim(db);
-      await item.save();
-     
+    const item = new XuatPhim(db);
+    await item.save();
+
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
 }
 async function getById(_id) {

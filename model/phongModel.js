@@ -8,7 +8,7 @@ const phongChieuSchema = new mongoose.Schema({
     selected: Boolean
   }],
   ngay: String,
-  gio: String,
+  gio:  [String],
   Rap: String,
   Phim: String,
 });

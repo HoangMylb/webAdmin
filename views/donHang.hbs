@@ -9,11 +9,16 @@
   <style>
     /* Set height to 100% of viewport height for specific list items */
     .nav-item.menu-open {
-       height: 100vh;
-       background-color: #000;
+      height: 100vh;
+      background-color: #000;
       /* 100% of viewport height */
     }
   </style>
+   
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
 </head>
 
 
@@ -24,7 +29,7 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-      
+
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
@@ -102,6 +107,12 @@
                   <p>Đơn hàng</p>
                 </a>
               </li>
+               <li class="nav-item">
+                <a href="./xuatphim" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Xuất phim</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -123,7 +134,20 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div class="input-group mb-3">
+      <select name="Phong" id="Phong" class="form-control" onchange="filterData()">
+        <!-- Sử dụng vòng lặp để tạo các tùy chọn từ danh sách phim -->
+        <option value="getAll">Tất cả</option>
+        <option value="QuangTrung">Rạp Quang Trung</option>
+        <option value="VanTri">Rạp Phan Văn Trị</option>
+        <option value="LeDuan">Rạp Lê Duẩn</option>
+        <option value="TruongChinh">Rạp Trường Trinh</option>
+        <option value="VanLuong">Rạp Nguyễn Văn Lượng</option>
+        <option value="NguyenDu">Rạp Nguyễn Du</option>
+        <option value="TanBinh">Rạp Tân Bình</option>
 
+      </select>
+    </div>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -135,13 +159,17 @@
               <tfoot>
                 <tr>
                   <td colspan="9">
-                    <p style="margin-left: 10px; font-size: 20px; ">Tổng doanh thu: <span id="formattedTotal"></span>đ</p>
+                    <p style="margin-left: 10px; font-size: 20px;">Tổng doanh thu: <span id="formattedTotal"></span>đ
+                    </p>
                   </td>
-                  
                 </tr>
               </tfoot>
+
+              <!-- Thêm dropdown để chọn kiểu sắp xếp -->
+
               <!-- /.card-header -->
               <div class="card-body">
+
 
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
@@ -151,21 +179,20 @@
                         STT</th>
                       <th
                         style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
-                        ID_User</th>
+                        Họ tên</th>
                       <th
                         style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
-                        ID_Phim</th>
+                        Phim</th>
                       <th
                         style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
-                        ID_Rạp phim</th>
+                        Rạp phim</th>
                       <th
                         style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
                         Ngày đặt vé</th>
                       <th
-                        style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        style="text-align: center;">
                         Xuất chiếu</th>
-                      <th
-                        style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                      <th style="text-align: center;">
                         Ghế</th>
                       <th
                         style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
@@ -178,32 +205,32 @@
                         Chi phí</th>
                     </tr>
                   </thead>
-                  <tbody>
 
 
-                    {{#each dh}}
+          <tbody >
+                  {{#each dh}}
 
-                    <tr>
-                      <td
-                        style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
-                        {{indexPlusOne}}</td>
-                      <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {{user}}</td>
-                      <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {{phim}}</td>
-                      <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {{rapPhim}}</td>
-                      <td>{{ngayDat}}</td>
-                      <td>{{xuatChieu}}</td>
-                      <td>{{ghe}}</td>
-                      <td>Cinema {{phongChieu}}</td>
-                      <td style="text-align: center;">{{soLuong}}</td>
-                      <td>{{formatNumber tien}}đ </td>
+                  <tr>
+                    <td
+                      style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                      {{indexPlusOne}}</td>
+                    <td>
+                      {{user}}</td>
+                    <td>
+                      {{phim}}</td>
+                    <td>
+                      {{rapPhim}}</td>
+                    <td>{{ngayDat}}</td>
+                    <td>{{xuatChieu}}</td>
+                    <td>{{ghe}}</td>
+                    <td>{{phongChieu}}</td>
+                    <td style="text-align: center;">{{soLuong}}</td>
+                    <td>{{formatNumber tien}}đ </td>
 
 
-                    </tr>
-                    {{/each }}
-
+                  </tr>
+                  {{/each }}
+</tbody>
                 </table>
 
 
@@ -225,19 +252,158 @@
   </div>
   <!-- ./wrapper -->
   <script>
-    // Giá trị ban đầu
-    var totalTien = {{totalTien dh}};
+     var totalTien = {{ totalTien dh }};
 
     // Định dạng thành "500.000"
     var formattedTotal = totalTien.toLocaleString('en-US');
 
     // Đặt giá trị đã định dạng vào phần tử HTML
     document.getElementById('formattedTotal').textContent = formattedTotal;
+  $(document).ready(function() {
+        // Kích hoạt DataTable cho bảng có id là 'example2'
+        $('#example2').DataTable();
+    });
+
+    function filterData() {
+      var selectedOption = document.getElementById("Phong").value;
+
+      // Lọc dữ liệu dựa trên lựa chọn
+      if (selectedOption === "QuangTrung") {
+        // Gọi hàm lấy dữ liệu theo rạp
+        getTheoRapData();
+      } else if (selectedOption === "VanTri") {
+        // Gọi hàm lấy dữ liệu theo phim
+        getRapVanTri();
+      } else if (selectedOption === "LeDuan") {
+        // Gọi hàm lấy dữ liệu theo phim
+        getRapLeDuan();
+      } else if (selectedOption === "TruongChinh"){
+        // Gọi hàm lấy tất cả dữ liệu
+        getRapTruongChinh();
+      }else if (selectedOption === "VanLuong") {
+        // Gọi hàm lấy dữ liệu theo phim
+        getRapVanLuong();
+      } else if (selectedOption === "NguyenDu"){
+        // Gọi hàm lấy tất cả dữ liệu
+        getRapNguyenDu();
+      } else if (selectedOption === "TanBinh"){
+        // Gọi hàm lấy tất cả dữ liệu
+        getRapTanBinh();
+      }else if (selectedOption === "getAll"){
+        // Gọi hàm lấy tất cả dữ liệu
+        getAllData();
+      }
+      else{
+       
+      }
+       // Cập nhật tổng doanh thu dựa trên lựa chọn
+     
+    }
+
+// Hàm cập nhật tổng doanh thu
+function updateTotalRevenue(data) {
+  var totalTien = data.reduce((accumulator, item) => accumulator + item.tien, 0);
+  var formattedTotal = formatNumber(totalTien);
+  document.getElementById('formattedTotal').textContent = formattedTotal;
+}
+
+    // Hàm gọi API để lấy dữ liệu theo rạp
+    function getTheoRapData() {
+
+      fetch('http://localhost:3000/donhang/rapQuangTrung').then(response => response.json()).then(data => updateTable(data));
+    }
+     function getRapVanTri() {
+
+      fetch('http://localhost:3000/donhang/rapPhanVanTri').then(response => response.json()).then(data => updateTable(data));
+    }
+     function getRapLeDuan() {
+
+      fetch('http://localhost:3000/donhang/rapLeDuan').then(response => response.json()).then(data => updateTable(data));
+    }
+     function getRapTruongChinh() {
+
+      fetch('http://localhost:3000/donhang/rapTruongChinh').then(response => response.json()).then(data => updateTable(data));
+    }
+     function getRapVanLuong() {
+
+      fetch('http://localhost:3000/donhang/rapVanLuong').then(response => response.json()).then(data => updateTable(data));
+    }
+     function getRapNguyenDu() {
+
+      fetch('http://localhost:3000/donhang/rapNguyenDu').then(response => response.json()).then(data => updateTable(data));
+    }
+     function getRapTanBinh() {
+
+      fetch('http://localhost:3000/donhang/rapTanBinh').then(response => response.json()).then(data => updateTable(data));
+    }
+
+
+
+    // Hàm gọi API để lấy tất cả dữ liệu
+    function getAllData() {
+
+      fetch('http://localhost:3000/donhang/getAll').then(response => response.json()).then(data => updateTable(data));
+    }
+
+    // Hàm cập nhật nội dung bảng với dữ liệu mới
+      function updateTable(data) {
+        // Lấy reference đến tbody của bảng
+        var tbody = document.querySelector("#example2 tbody");
+        console.log('dataaaa: ', data)
+        // Xóa hết các dòng hiện tại trong tbody
+        tbody.innerHTML = "";
+
+        // Duyệt qua dữ liệu mới và thêm vào tbody
+        data.message.forEach(function (item, index) {
+          var row = `<tr>
+                      <td style="max-width: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;text-align: center;">
+                        ${index + 1}
+                      </td>
+                      <td>${item.user}</td>
+                      <td>${item.phim}</td>
+                      <td>${item.rapPhim}</td>
+                      <td>${item.ngayDat}</td>
+                      <td>${item.xuatChieu}</td>
+                      <td>${item.ghe}</td>
+                      <td>Cinema ${item.phongChieu}</td>
+                      <td style="text-align: center;">${item.soLuong}</td>
+                      <td>${formatNumber(item.tien)}đ</td>
+                    </tr>`;
+
+          // Thêm dòng vào tbody
+          tbody.innerHTML += row;
+        });
+        updateTotalRevenue(data.message);
+      }
+       function formatNumber(number) {
+    return new Intl.NumberFormat('en-US').format(number);
+  }
+function sortTable(order) {
+      var table = document.getElementById('example2');
+      var rows = table.getElementsByTagName('tr');
+      var rowsArray = Array.from(rows).slice(1);
+
+      // Sắp xếp mảng theo cột ngày đặt vé (cột thứ 5)
+      rowsArray.sort(function (a, b) {
+        var dateA = new Date(a.cells[4].textContent);
+        var dateB = new Date(b.cells[4].textContent);
+        return order === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+
+      // Xóa tất cả các dòng trong bảng
+      while (table.rows.length > 1) {
+        table.deleteRow(1);
+      }
+
+      // Thêm lại các dòng đã được sắp xếp vào bảng
+      rowsArray.forEach(function (row) {
+        table.appendChild(row);
+      });
+    }
+
   </script>
-
-  <!-- Page specific script -->
-
 </body>
+  
 
 
 </html>
